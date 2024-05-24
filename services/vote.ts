@@ -1,6 +1,6 @@
-import { kv } from "@vercel/kv";
+import { kv } from '@vercel/kv';
 
-import { POLL_EXPIRY } from "@/constants";
+import { POLL_EXPIRY } from '@/constants';
 
 export const vote = async (pollId: string, buttonId: number, fid: number): Promise<void> => {
     const multi = kv.multi();

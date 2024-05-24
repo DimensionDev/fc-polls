@@ -1,6 +1,6 @@
-import { Poll } from "@/app/types";
-import { Theme, THEME_CONFIG } from "@/constants/theme";
-import { calculatePoll } from "@/helpers/calculatePoll";
+import { Poll } from '@/app/types';
+import { Theme, THEME_CONFIG } from '@/constants/theme';
+import { calculatePoll } from '@/helpers/calculatePoll';
 
 export interface PollCardProps {
     poll: Poll;
@@ -17,11 +17,11 @@ export function PollCard({ poll, showResults, hideTitle, theme, votedOption }: P
     return (
         <div
             style={{
-                justifyContent: "flex-start",
-                alignItems: "center",
-                display: "flex",
-                width: "100%",
-                height: "100%",
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                display: 'flex',
+                width: '100%',
+                height: '100%',
                 backgroundColor: themeConfig.cardBgColor,
                 padding: 50,
                 lineHeight: 1.2,
@@ -30,22 +30,18 @@ export function PollCard({ poll, showResults, hideTitle, theme, votedOption }: P
         >
             <div
                 style={{
-                    display: "flex",
-                    flexDirection: "column",
+                    display: 'flex',
+                    flexDirection: 'column',
                     padding: 20,
                 }}
             >
-                {!hideTitle && (
-                    <h2 style={{ textAlign: "center", color: themeConfig.titleColor }}>
-                        {poll.title}
-                    </h2>
-                )}
+                {!hideTitle && <h2 style={{ textAlign: 'center', color: themeConfig.titleColor }}>{poll.title}</h2>}
                 {pollData.map((opt, index) => {
                     return (
                         <div
                             key={index}
                             style={{
-                                display: "flex",
+                                display: 'flex',
                                 backgroundColor: showResults
                                     ? votedOption === index + 1
                                         ? themeConfig.optionSelectedBgColor
@@ -56,8 +52,8 @@ export function PollCard({ poll, showResults, hideTitle, theme, votedOption }: P
                                 marginBottom: 12,
                                 borderRadius: 10,
                                 width: `${showResults ? opt.percentOfTotal : 100}%`,
-                                whiteSpace: "nowrap",
-                                overflow: "visible",
+                                whiteSpace: 'nowrap',
+                                overflow: 'visible',
                             }}
                         >
                             <span>

@@ -22,13 +22,9 @@ export const generateFrameMetas = (frameMetaData: FrameMetaData): string => {
         metaList.push(`<meta property="og:image" content="${imageUrl}">`);
     }
     buttons.forEach((button, index) => {
-        metaList.push(
-            `<meta name="${prefix}:frame:button:${index + 1}" content="${button.text}">`
-        );
+        metaList.push(`<meta name="${prefix}:frame:button:${index + 1}" content="${button.text}">`);
         if (button.action) {
-            metaList.push(
-                `<meta name="${prefix}:frame:button:${index + 1}:action" content="${button.action}">`
-            );
+            metaList.push(`<meta name="${prefix}:frame:button:${index + 1}:action" content="${button.action}">`);
         }
     });
 
