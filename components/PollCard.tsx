@@ -1,16 +1,16 @@
-import { ComposedPoll } from "@/app/types";
+import { Poll } from "@/app/types";
 import { Theme, THEME_CONFIG } from "@/constants/theme";
 import { calculatePoll } from "@/helpers/calculatePoll";
 
-interface PollCardProps {
-    poll: ComposedPoll;
+export interface PollCardProps {
+    poll: Poll;
     showResults: boolean;
     hideTitle: boolean;
     theme: Theme;
     votedOption?: number | null;
 }
 
-export const PollCard = ({ poll, showResults, hideTitle, theme, votedOption }: PollCardProps) => {
+export function PollCard({ poll, showResults, hideTitle, theme, votedOption }: PollCardProps) {
     const pollData = calculatePoll(poll);
     const themeConfig = THEME_CONFIG[theme];
 
@@ -43,6 +43,7 @@ export const PollCard = ({ poll, showResults, hideTitle, theme, votedOption }: P
                 {pollData.map((opt, index) => {
                     return (
                         <div
+                            key={index}
                             style={{
                                 display: "flex",
                                 backgroundColor: showResults
@@ -69,4 +70,4 @@ export const PollCard = ({ poll, showResults, hideTitle, theme, votedOption }: P
             </div>
         </div>
     );
-};
+}

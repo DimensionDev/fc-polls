@@ -1,6 +1,6 @@
-import { ComposedPoll } from "@/app/types";
+import { Poll } from "@/app/types";
 
-export const calculatePoll = (poll: ComposedPoll) => {
+export const calculatePoll = (poll: Poll) => {
     const options = Object.keys(poll)
         .filter((key) => key.startsWith("option"))
         .map((key) => poll[key as `option${number}`]);

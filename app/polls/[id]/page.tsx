@@ -1,67 +1,39 @@
-import { kv } from '@vercel/kv';
-import { Metadata, ResolvingMetadata } from 'next';
-import Head from 'next/head';
+import { Metadata } from 'next';
 
 import { PollVoteForm } from '@/app/form';
-import { Poll } from '@/app/types';
-import { MIN_VALID_IN_DAYS } from '@/constants';
+import { DEFAULT_FRAME_PREFIX, NULL_POLL } from '@/constants';
+import { calculatePoll } from '@/helpers/calculatePoll';
+import { getPoll } from '@/services/getPoll';
 
-async function getPoll(id: string): Promise<Poll> {
-    const nullPoll = {
-        id: '',
-        title: 'No poll found',
-        option1: '',
-        option2: '',
-        option3: '',
-        option4: '',
-        votes1: 0,
-        votes2: 0,
-        votes3: 0,
-        votes4: 0,
-        created_at: 0,
-        validInDays: MIN_VALID_IN_DAYS,
-    };
-
-    try {
-        const poll: Poll | null = await kv.hgetall(`poll:${id}`);
-
-        if (!poll) {
-            return nullPoll;
-        }
-
-        return poll;
-    } catch (error) {
-        console.error(`[poll]: failed to read poll: ${id}.`, error);
-        return nullPoll;
-    }
+interface MetadataProps {
+    params: { id: string };
+    searchParams: { [key: string]: string };
 }
 
-type Props = {
-    params: { id: string };
-    searchParams: { [key: string]: string | string[] | undefined };
-};
-
-export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: MetadataProps): Promise<Metadata> {
     // read route params
     const id = params.id;
-    const poll = await getPoll(id);
+    const prefix = searchParams.prefix || DEFAULT_FRAME_PREFIX;
+    const poll = (await getPoll(id)) ?? NULL_POLL;
+    const newQuery = new URLSearchParams(searchParams);
+    const imageUrl = `${process.env.HOST}/api/image?id=${id}&${newQuery.toString()}`;
 
+    const options = calculatePoll(poll);
     const fcMetadata: Record<string, string> = {
-        'fc:frame': 'vNext',
-        'fc:frame:post_url': `${process.env.HOST}/api/vote?id=${id}`,
-        'fc:frame:image': `${process.env.HOST}/api/image?id=${id}`,
+        [`${prefix}:frame`]: 'vNext',
+        [`${prefix}:frame:post_url`]: `${process.env.HOST}/api/vote?id=${id}&${newQuery.toString()}`,
+        [`${prefix}:frame:image`]: imageUrl,
     };
-    [poll.option1, poll.option2, poll.option3, poll.option4]
-        .filter((o) => o !== '')
-        .map((option, index) => {
-            fcMetadata[`fc:frame:button:${index + 1}`] = option;
-        });
+
+    options.forEach((option, index) => {
+        fcMetadata[`${prefix}:frame:button:${index + 1}`] = option.option;
+    });
 
     return {
         title: poll.title,
         openGraph: {
             title: poll.title,
-            images: [`/api/image?id=${id}`],
+            images: [imageUrl],
         },
         other: {
             ...fcMetadata,
@@ -69,18 +41,9 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
         metadataBase: new URL(process.env.HOST || ''),
     };
 }
-function getMeta(poll: Poll) {
-    // This didn't work for some reason
-    return (
-        <Head>
-            <meta property="og:image" content="" key="test" />
-            <meta property="og:title" content="My page title" key="title" />
-        </Head>
-    );
-}
 
 export default async function Page({ params }: { params: { id: string } }) {
-    const poll = await getPoll(params.id);
+    const poll = (await getPoll(params.id)) ?? NULL_POLL;
 
     return (
         <>
