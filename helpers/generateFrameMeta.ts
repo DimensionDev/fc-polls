@@ -9,7 +9,7 @@ interface FrameMetaData {
     title?: string;
 }
 
-export const generateFrameMetas = (frameMetaData: FrameMetaData): string => {
+export const generateFrameMeta = (frameMetaData: FrameMetaData): string => {
     const { imageUrl, postUrl, buttons, prefix, title } = frameMetaData;
     const metaList: string[] = [
         `<meta name="${prefix}:frame" content="vNext">`,
