@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import { v4 as uuid } from 'uuid';
 import { z } from 'zod';
 
-import { ComposedPoll } from '@/app/types';
+import { Poll } from '@/app/types';
 import {
     MAX_CHARS_POLL_OPTION,
     MAX_CHARS_POLL_TITLE,
@@ -13,7 +13,7 @@ import {
 } from '@/constants';
 import { createErrorResponseJSON } from '@/helpers/createErrorResponseJSON';
 import { createSuccessResponseJSON } from '@/helpers/createSuccessResponseJSON';
-import { savePollToDb } from '@/helpers/savePollToDb';
+import { savePoll } from '@/services/savePoll';
 
 const PollSchema = z.object({
     text: z
@@ -43,7 +43,7 @@ const PollSchema = z.object({
     }),
 });
 
-const composePoll = (pollData: z.infer<typeof PollSchema>): ComposedPoll => {
+const composePoll = (pollData: z.infer<typeof PollSchema>): Poll => {
     const { text, poll } = pollData;
     return {
         id: uuid(),
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
         const parsed = PollSchema.safeParse(await request.json());
         if (!parsed.success) throw new Error(parsed.error.message);
 
-        const { pollId } = await savePollToDb(composePoll(parsed.data));
+        const { pollId } = await savePoll(composePoll(parsed.data));
         return createSuccessResponseJSON({ pollId });
     } catch (error) {
         if (error instanceof Error) {
