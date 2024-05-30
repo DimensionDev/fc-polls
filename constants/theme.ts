@@ -1,6 +1,6 @@
 import { PollTheme } from '@/app/types';
 
-export enum Theme {
+export enum IMAGE_THEME {
     Dark = 'dark',
     Light = 'light',
 }
@@ -22,6 +22,6 @@ export const LIGHT_THEME: PollTheme = {
 };
 
 export const THEME_CONFIG = {
-    [Theme.Dark]: DARK_THEME,
-    [Theme.Light]: LIGHT_THEME,
+    [IMAGE_THEME.Dark]: DARK_THEME,
+    [IMAGE_THEME.Light]: LIGHT_THEME,
 };

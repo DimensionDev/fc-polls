@@ -10,6 +10,7 @@ import {
     MIN_VALID_IN_DAYS,
     POLL_OPTIONS_MAX_COUNT,
     POLL_OPTIONS_MIN_COUNT,
+    POLL_STATUS,
 } from '@/constants';
 import { createErrorResponseJSON } from '@/helpers/createErrorResponseJSON';
 import { createSuccessResponseJSON } from '@/helpers/createSuccessResponseJSON';
@@ -49,14 +50,14 @@ const composePoll = (pollData: z.infer<typeof PollSchema>): Poll => {
         id: uuid(),
         title: text,
         created_at: Date.now(),
+        status: POLL_STATUS.ACTIVE,
+        totalVotes: 0,
         validInDays: poll.validInDays,
-        ...poll.options.reduce((result, option, index) => {
-            return {
-                ...result,
-                [`option${index + 1}`]: option.label,
-                [`votes${index + 1}`]: 0,
-            };
-        }, {}),
+        options: poll.options.map((option) => ({
+            id: option.id,
+            text: option.label,
+            votes: 0,
+        })),
     };
 };
 

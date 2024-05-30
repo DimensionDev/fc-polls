@@ -2,13 +2,14 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { useOptimistic, useRef, useState, useTransition } from 'react';
 import { v4 as uuid } from 'uuid';
 
-import { redirectToPolls, savePoll, votePoll } from '@/app/actions';
+import { redirectToPolls, votePoll } from '@/app/actions';
 import { Poll } from '@/app/types';
 import { MIN_VALID_IN_DAYS } from '@/constants';
+import { createNullPoll } from '@/helpers/createNullPoll';
 
 interface PollState {
     newPoll: Poll;
@@ -31,21 +32,9 @@ export function PollCreateForm() {
         }
     });
 
-    const pollStub = {
-        id: uuid(),
-        created_at: new Date().getTime(),
-        title: '',
-        option1: '',
-        option2: '',
-        option3: '',
-        option4: '',
-        votes1: 0,
-        votes2: 0,
-        votes3: 0,
-        votes4: 0,
-        validInDays: MIN_VALID_IN_DAYS,
-    };
-    const saveWithNewPoll = savePoll.bind(null, pollStub);
+    const pollStub = createNullPoll();
+    pollStub.id = uuid();
+    pollStub.created_at = Date.now();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [isPending, startTransition] = useTransition();
 
@@ -55,21 +44,18 @@ export function PollCreateForm() {
                 <form
                     className="relative my-8"
                     ref={formRef}
-                    action={saveWithNewPoll}
                     onSubmit={(event) => {
                         event.preventDefault();
                         const formData = new FormData(event.currentTarget);
-                        const newPoll = {
+                        const newPoll: Poll = {
                             ...pollStub,
+                            options: [
+                                { id: uuid(), text: formData.get('option1') as string, votes: 0 },
+                                { id: uuid(), text: formData.get('option2') as string, votes: 0 },
+                                { id: uuid(), text: formData.get('option3') as string, votes: 0 },
+                                { id: uuid(), text: formData.get('option4') as string, votes: 0 },
+                            ].filter(e => !!e.text),
                             title: formData.get('title') as string,
-                            option1: formData.get('option1') as string,
-                            option2: formData.get('option2') as string,
-                            option3: formData.get('option3') as string,
-                            option4: formData.get('option4') as string,
-                            votes1: 0,
-                            votes2: 0,
-                            votes3: 0,
-                            votes4: 0,
                         };
 
                         formRef.current?.reset();
@@ -79,7 +65,26 @@ export function PollCreateForm() {
                                 pending: true,
                             });
 
-                            await savePoll(newPoll, formData);
+                            const response = await fetch('/api/poll', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    text: newPoll.title,
+                                    poll: {
+                                        id: newPoll.id,
+                                        options: newPoll.options.map((option) => ({
+                                            id: option.id,
+                                            label: option.text,
+                                        })),
+                                        validInDays: MIN_VALID_IN_DAYS,
+                                    }
+                                }),
+                            }).then((res) => res.json());
+                            if (response.success) {
+                                redirect(`/polls/${response.data.pollId}`);
+                            }
                         });
                     }}
                 >
@@ -148,18 +153,17 @@ export function PollCreateForm() {
 function PollOptions({ poll, onChange }: { poll: Poll; onChange: (index: number) => void }) {
     return (
         <div className="mb-4 text-left">
-            {[poll.option1, poll.option2, poll.option3, poll.option4]
-                .filter((e) => e !== '')
+            {poll.options.filter((e) => e.text !== '')
                 .map((option, index) => (
                     <label key={index} className="block">
                         <input
                             type="radio"
                             name="poll"
-                            value={option}
+                            value={option.text}
                             onChange={() => onChange(index + 1)}
                             className="mr-2"
                         />
-                        {option}
+                        {option.text}
                     </label>
                 ))}
         </div>

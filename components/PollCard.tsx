@@ -1,18 +1,20 @@
 import { Poll } from '@/app/types';
-import { Theme, THEME_CONFIG } from '@/constants/theme';
-import { calculatePoll } from '@/helpers/calculatePoll';
+import { POLL_STATUS } from '@/constants';
+import { IMAGE_THEME, THEME_CONFIG } from '@/constants/theme';
 
 export interface PollCardProps {
     poll: Poll;
-    showResults: boolean;
-    hideTitle: boolean;
-    theme: Theme;
-    votedOption?: number | null;
+    theme: IMAGE_THEME;
 }
 
-export function PollCard({ poll, showResults, hideTitle, theme, votedOption }: PollCardProps) {
-    const pollData = calculatePoll(poll);
+export function PollCard({ poll, theme }: PollCardProps) {
+    const { status, options, totalVotes, title } = poll;
     const themeConfig = THEME_CONFIG[theme];
+
+    const votedIndexList = options.reduce<number[]>((acc, option, index) => {
+        return option.voted ? [...acc, index] : acc;
+    }, []);
+    const showResults = status === POLL_STATUS.CLOSED || votedIndexList.length > 0;
 
     return (
         <div
@@ -35,15 +37,16 @@ export function PollCard({ poll, showResults, hideTitle, theme, votedOption }: P
                     padding: 20,
                 }}
             >
-                {!hideTitle && <h2 style={{ textAlign: 'center', color: themeConfig.titleColor }}>{poll.title}</h2>}
-                {pollData.map((opt, index) => {
+                <h2 style={{ textAlign: 'center', color: themeConfig.titleColor }}>{title}</h2>
+                {options.map((opt, index) => {
+                    const percentOfTotal = totalVotes ? Math.round((opt.votes / totalVotes) * 100) : 0;
                     return (
                         <div
                             key={index}
                             style={{
                                 display: 'flex',
                                 backgroundColor: showResults
-                                    ? votedOption === index + 1
+                                    ? votedIndexList.includes(index)
                                         ? themeConfig.optionSelectedBgColor
                                         : themeConfig.optionBgColor
                                     : 'transparent',
@@ -51,14 +54,14 @@ export function PollCard({ poll, showResults, hideTitle, theme, votedOption }: P
                                 padding: 10,
                                 marginBottom: 12,
                                 borderRadius: 10,
-                                width: `${showResults ? opt.percentOfTotal : 100}%`,
+                                width: `${showResults ? percentOfTotal : 100}%`,
                                 whiteSpace: 'nowrap',
                                 overflow: 'visible',
                             }}
                         >
                             <span>
-                                {showResults ? `${opt.percentOfTotal}%: ` : `${index + 1}. `}
-                                {opt.option}
+                                {showResults ? `${percentOfTotal}%: ` : `${index + 1}. `}
+                                {opt.text}
                             </span>
                         </div>
                     );
