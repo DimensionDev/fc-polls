@@ -11,17 +11,11 @@ export const POLL_EXPIRY = 60 * 60 * 24 * 180; // Expire polls after 3 months
 
 export const DEFAULT_FRAME_PREFIX = 'fc';
 
-export const NULL_POLL = {
-    id: '',
-    title: 'No poll found',
-    option1: '',
-    option2: '',
-    option3: '',
-    option4: '',
-    votes1: 0,
-    votes2: 0,
-    votes3: 0,
-    votes4: 0,
-    created_at: 0,
-    validInDays: MIN_VALID_IN_DAYS,
+export const DEFAULT_FRAME_VERSION = 'vNext';
+
+export const PER_USER_VOTE_LIMIT = 1;
+
+export enum POLL_STATUS {
+    ACTIVE = 'active',
+    CLOSED = 'closed',
 };

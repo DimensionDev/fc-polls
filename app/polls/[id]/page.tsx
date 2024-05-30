@@ -1,8 +1,11 @@
 import { Metadata } from 'next';
 
 import { PollVoteForm } from '@/app/form';
-import { DEFAULT_FRAME_PREFIX, NULL_POLL } from '@/constants';
-import { calculatePoll } from '@/helpers/calculatePoll';
+import { PER_USER_VOTE_LIMIT, POLL_STATUS } from '@/constants';
+import { HOST } from '@/constants/env';
+import { IMAGE_QUERY_SCHEMA } from '@/constants/zod';
+import { createFrameMetaDataFromPoll } from '@/helpers/createFrameMetaDataFromPoll';
+import { createNullPoll } from '@/helpers/createNullPoll';
 import { getPoll } from '@/services/getPoll';
 
 interface MetadataProps {
@@ -11,39 +14,32 @@ interface MetadataProps {
 }
 
 export async function generateMetadata({ params, searchParams }: MetadataProps): Promise<Metadata> {
-    // read route params
-    const id = params.id;
-    const prefix = searchParams.prefix || DEFAULT_FRAME_PREFIX;
-    const poll = (await getPoll(id)) ?? NULL_POLL;
-    const newQuery = new URLSearchParams(searchParams);
-    const imageUrl = `${process.env.HOST}/api/image?id=${id}&${newQuery.toString()}`;
-
-    const options = calculatePoll(poll);
-    const fcMetadata: Record<string, string> = {
-        [`${prefix}:frame`]: 'vNext',
-        [`${prefix}:frame:post_url`]: `${process.env.HOST}/api/vote?id=${id}&${newQuery.toString()}`,
-        [`${prefix}:frame:image`]: imageUrl,
-    };
-
-    options.forEach((option, index) => {
-        fcMetadata[`${prefix}:frame:button:${index + 1}`] = option.option;
+    const queryData = IMAGE_QUERY_SCHEMA.parse({
+        ...searchParams,
+        id: params.id,
     });
+    const poll = (await getPoll(queryData.id, queryData.userId)) ?? createNullPoll();
+    const votedOptions = poll.options.filter((opt) => opt.voted);
+
+    const { openGraph, frameMetaList } = createFrameMetaDataFromPoll(
+        poll,
+        queryData,
+        poll.status !== POLL_STATUS.ACTIVE || votedOptions.length >= PER_USER_VOTE_LIMIT,
+    );
 
     return {
         title: poll.title,
-        openGraph: {
-            title: poll.title,
-            images: [imageUrl],
-        },
-        other: {
-            ...fcMetadata,
-        },
-        metadataBase: new URL(process.env.HOST || ''),
+        openGraph,
+        other: frameMetaList.reduce<Metadata['other']>((acc, meta) => {
+            acc![meta.name] = meta.content;
+            return acc;
+        }, {}),
+        metadataBase: new URL(HOST || ''),
     };
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-    const poll = (await getPoll(params.id)) ?? NULL_POLL;
+    const poll = (await getPoll(params.id)) ?? createNullPoll();
 
     return (
         <>
