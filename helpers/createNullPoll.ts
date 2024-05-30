@@ -1,5 +1,5 @@
-import { Poll } from "@/app/types";
-import { MIN_VALID_IN_DAYS, POLL_STATUS } from "@/constants";
+import { Poll } from '@/app/types';
+import { MIN_VALID_IN_DAYS, POLL_STATUS } from '@/constants';
 
 export const createNullPoll = (): Poll => ({
     id: '',

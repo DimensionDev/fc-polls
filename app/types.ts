@@ -1,11 +1,11 @@
-import { POLL_STATUS } from "@/constants";
+import { POLL_STATUS } from '@/constants';
 
 export interface PollOption {
     id: string;
     text: string;
     votes: number;
     voted?: boolean;
-};
+}
 
 export type Poll = {
     id: string;
@@ -40,14 +40,14 @@ export interface FrameMetaOptions {
         images?: string[];
     };
     prefix?: FramePrefix;
-};
+}
 
 export interface FrameMetaData {
     openGraph: {
         title: string;
         images: string[];
     };
-    frameMetaList: Array<{ name: string, content: string }>;
-};
+    frameMetaList: Array<{ name: string; content: string }>;
+}
 
 export const POLL_EXPIRY = 60 * 60 * 24 * 180; // Expire polls after 3 months

@@ -18,4 +18,4 @@ export const PER_USER_VOTE_LIMIT = 1;
 export enum POLL_STATUS {
     ACTIVE = 'active',
     CLOSED = 'closed',
-};
+}

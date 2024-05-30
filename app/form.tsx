@@ -54,7 +54,7 @@ export function PollCreateForm() {
                                 { id: uuid(), text: formData.get('option2') as string, votes: 0 },
                                 { id: uuid(), text: formData.get('option3') as string, votes: 0 },
                                 { id: uuid(), text: formData.get('option4') as string, votes: 0 },
-                            ].filter(e => !!e.text),
+                            ].filter((e) => !!e.text),
                             title: formData.get('title') as string,
                         };
 
@@ -79,7 +79,7 @@ export function PollCreateForm() {
                                             label: option.text,
                                         })),
                                         validInDays: MIN_VALID_IN_DAYS,
-                                    }
+                                    },
                                 }),
                             }).then((res) => res.json());
                             if (response.success) {
@@ -153,7 +153,8 @@ export function PollCreateForm() {
 function PollOptions({ poll, onChange }: { poll: Poll; onChange: (index: number) => void }) {
     return (
         <div className="mb-4 text-left">
-            {poll.options.filter((e) => e.text !== '')
+            {poll.options
+                .filter((e) => e.text !== '')
                 .map((option, index) => (
                     <label key={index} className="block">
                         <input
