@@ -4,7 +4,8 @@ import { kv } from '@vercel/kv';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import { Poll, POLL_EXPIRY } from '@/app/types';
+import { Poll } from '@/app/types';
+import { POLL_EXPIRY } from '@/constants';
 
 export async function savePoll(poll: Poll, formData: FormData) {
     const newPoll = {

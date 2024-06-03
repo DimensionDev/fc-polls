@@ -10,13 +10,16 @@ import {
     MIN_VALID_IN_DAYS,
     POLL_OPTIONS_MAX_COUNT,
     POLL_OPTIONS_MIN_COUNT,
-    POLL_STATUS,
 } from '@/constants';
+import { FRAME_PLATFORM, POLL_STATUS } from '@/constants/enum';
 import { createErrorResponseJSON } from '@/helpers/createErrorResponseJSON';
 import { createSuccessResponseJSON } from '@/helpers/createSuccessResponseJSON';
 import { savePoll } from '@/services/savePoll';
 
 const PollSchema = z.object({
+    platform: z.enum([
+        FRAME_PLATFORM.Farcaster, FRAME_PLATFORM.Lens
+    ]),
     text: z
         .string()
         .trim()
@@ -45,12 +48,14 @@ const PollSchema = z.object({
 });
 
 const composePoll = (pollData: z.infer<typeof PollSchema>): Poll => {
-    const { text, poll } = pollData;
+    const { text, poll, platform } = pollData;
     return {
         id: uuid(),
         title: text,
         created_at: Date.now(),
-        status: POLL_STATUS.ACTIVE,
+        created_by: '',
+        platform,
+        status: POLL_STATUS.Active,
         totalVotes: 0,
         validInDays: poll.validInDays,
         options: poll.options.map((option) => ({

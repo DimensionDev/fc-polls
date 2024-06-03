@@ -1,3 +1,6 @@
+import { VERCEL_NEV } from "@/constants/enum";
+import { NEXT_PUBLIC_VERCEL_ENV } from "@/constants/env";
+
 export const POLL_OPTIONS_MIN_COUNT = 2;
 export const POLL_OPTIONS_MAX_COUNT = 4;
 
@@ -15,7 +18,8 @@ export const DEFAULT_FRAME_VERSION = 'vNext';
 
 export const PER_USER_VOTE_LIMIT = 1;
 
-export enum POLL_STATUS {
-    ACTIVE = 'active',
-    CLOSED = 'closed',
-};
+export const COMMON_APP_TITLE = 'Frame Server';
+
+export const IS_PRODUCTION = NEXT_PUBLIC_VERCEL_ENV === VERCEL_NEV.Production;
+export const IS_DEVELOPMENT = NEXT_PUBLIC_VERCEL_ENV === VERCEL_NEV.Development;
+export const IS_PREVIEW = NEXT_PUBLIC_VERCEL_ENV === VERCEL_NEV.Preview;

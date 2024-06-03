@@ -1,12 +1,15 @@
 import { Poll } from "@/app/types";
-import { MIN_VALID_IN_DAYS, POLL_STATUS } from "@/constants";
+import { MIN_VALID_IN_DAYS } from "@/constants";
+import { FRAME_PLATFORM, POLL_STATUS } from "@/constants/enum";
 
 export const createNullPoll = (): Poll => ({
     id: '',
     title: 'No poll found',
     created_at: 0,
+    created_by: '',
+    platform: FRAME_PLATFORM.Farcaster,
     validInDays: MIN_VALID_IN_DAYS,
-    status: POLL_STATUS.ACTIVE,
+    status: POLL_STATUS.Active,
     totalVotes: 0,
     options: [
         { id: '1', text: '', votes: 0 },

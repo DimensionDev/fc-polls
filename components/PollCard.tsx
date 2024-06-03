@@ -1,20 +1,25 @@
 import { Poll } from '@/app/types';
-import { POLL_STATUS } from '@/constants';
+import { POLL_STATUS } from '@/constants/enum';
 import { IMAGE_THEME, THEME_CONFIG } from '@/constants/theme';
+import { isCreatedByProfileId } from '@/helpers/isCreatedByProfileId';
 
 export interface PollCardProps {
     poll: Poll;
     theme: IMAGE_THEME;
+    newVotedIdx?: number;
+    profileId?: string;
 }
 
-export function PollCard({ poll, theme }: PollCardProps) {
+export function PollCard({ poll, theme, newVotedIdx, profileId }: PollCardProps) {
     const { status, options, totalVotes, title } = poll;
     const themeConfig = THEME_CONFIG[theme];
 
     const votedIndexList = options.reduce<number[]>((acc, option, index) => {
-        return option.voted ? [...acc, index] : acc;
-    }, []);
-    const showResults = status === POLL_STATUS.CLOSED || votedIndexList.length > 0;
+        return option.voted ? [...acc, index + 1] : acc;
+    }, newVotedIdx ? [newVotedIdx] : []);
+    const showResults = status !== POLL_STATUS.Active ||
+        votedIndexList.length > 0 ||
+        isCreatedByProfileId(poll, profileId)
 
     return (
         <div
@@ -46,7 +51,7 @@ export function PollCard({ poll, theme }: PollCardProps) {
                             style={{
                                 display: 'flex',
                                 backgroundColor: showResults
-                                    ? votedIndexList.includes(index)
+                                    ? votedIndexList.includes(index + 1)
                                         ? themeConfig.optionSelectedBgColor
                                         : themeConfig.optionBgColor
                                     : 'transparent',
