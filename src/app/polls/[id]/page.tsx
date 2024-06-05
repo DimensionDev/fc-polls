@@ -22,10 +22,10 @@ export async function generateMetadata({ params, searchParams }: MetadataProps):
         title: COMMON_APP_TITLE,
         other: {
             ...(await fetchMetadata(
-                new URL(urlcat("/api/frames", queryData), env.internal.HOST)
+                new URL(urlcat("/api/frames", queryData), env.external.HOST)
             )),
         },
-        metadataBase: new URL(env.internal.HOST),
+        metadataBase: new URL(env.external.HOST),
     };
 }
 

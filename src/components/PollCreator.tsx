@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 
 import { MIN_VALID_IN_DAYS } from '@/constants';
-import { FRAME_PLATFORM } from '@/constants/enum';
+import { FRAME_SOURCE } from '@/constants/enum';
 
 const defaultOptions = [1, 2, 3, 4];
 
@@ -30,7 +30,6 @@ export function PollCreator() {
                 },
                 body: JSON.stringify({
                     text: question,
-                    platform: FRAME_PLATFORM.Farcaster,
                     poll: {
                         id: uuid(),
                         options: options.map((option) => ({
@@ -38,6 +37,7 @@ export function PollCreator() {
                             label: option,
                         })),
                         validInDays: MIN_VALID_IN_DAYS,
+                        source: FRAME_SOURCE.Farcaster,
                     },
                 }),
             }).then((res) => res.json());

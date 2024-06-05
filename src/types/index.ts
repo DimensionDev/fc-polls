@@ -1,4 +1,4 @@
-import { FRAME_PLATFORM, POLL_STATUS } from "@/constants/enum";
+import { FRAME_SOURCE, POLL_STATUS } from "@/constants/enum";
 
 export interface PollOption {
     id: string;
@@ -12,7 +12,7 @@ export type Poll = {
     title: string;
     /** author */
     created_by: string;
-    platform: FRAME_PLATFORM;
+    source: FRAME_SOURCE;
     created_at: number;
     status: POLL_STATUS;
     totalVotes: number;

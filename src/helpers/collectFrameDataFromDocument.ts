@@ -5,6 +5,7 @@ const getMetaContent = (document: Document, name: string) => {
 };
 
 export const collectFrameDataFromDocument = (): FrameData | null => {
+    if (typeof window === 'undefined') return null;
     const imageMeta = document.querySelector<HTMLMetaElement>('meta[name="of:image"]');
     const buttons = document.querySelectorAll<HTMLMetaElement>('meta[name^="of:button:"]');
 

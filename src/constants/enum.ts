@@ -9,7 +9,7 @@ export enum POLL_STATUS {
     Closed = 'closed',
 };
 
-export enum FRAME_PLATFORM {
+export enum FRAME_SOURCE {
     Lens = 'lens',
     Farcaster = 'farcaster'
 };
