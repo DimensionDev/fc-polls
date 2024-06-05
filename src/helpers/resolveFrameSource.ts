@@ -1,4 +1,4 @@
-import { FRAME_SOURCE } from "@/constants/enum";
+import { FRAME_SOURCE } from '@/constants/enum';
 
 export const resolveFrameSource = (frameSource: string): FRAME_SOURCE | null => {
     switch (frameSource) {

@@ -7,7 +7,7 @@ interface Parameters {
     poll: Poll;
     theme: IMAGE_THEME;
     profileId?: string;
-    newVotedIdx?: number
+    newVotedIdx?: number;
     // we dont use this now
     locale?: LOCALE;
 }

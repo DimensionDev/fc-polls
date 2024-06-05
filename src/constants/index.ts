@@ -1,5 +1,5 @@
-import { VERCEL_NEV } from "@/constants/enum";
-import { env } from "@/constants/env";
+import { VERCEL_NEV } from '@/constants/enum';
+import { env } from '@/constants/env';
 
 export const POLL_OPTIONS_MIN_COUNT = 2;
 export const POLL_OPTIONS_MAX_COUNT = 4;

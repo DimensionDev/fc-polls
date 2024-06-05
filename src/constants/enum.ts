@@ -2,19 +2,19 @@ export enum VERCEL_NEV {
     Production = 'production',
     Preview = 'preview',
     Development = 'development',
-};
+}
 
 export enum POLL_STATUS {
     Active = 'active',
     Closed = 'closed',
-};
+}
 
 export enum FRAME_SOURCE {
     Lens = 'lens',
-    Farcaster = 'farcaster'
-};
+    Farcaster = 'farcaster',
+}
 
 export enum LOCALE {
     EN = 'en',
     ZH = 'zh',
-};
+}

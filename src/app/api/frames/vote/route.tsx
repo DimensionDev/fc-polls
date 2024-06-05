@@ -19,7 +19,7 @@ export const POST = frames(async (ctx) => {
 
     const source = ctx.clientProtocol?.id ? resolveFrameSource(ctx.clientProtocol.id) : null;
     if (!source) {
-        error(`Not supported frame client protocol: ${ctx.clientProtocol?.id}`, StatusCodes.BAD_REQUEST)
+        error(`Not supported frame client protocol: ${ctx.clientProtocol?.id}`, StatusCodes.BAD_REQUEST);
     }
 
     const isFarcaster = source === FRAME_SOURCE.Farcaster;

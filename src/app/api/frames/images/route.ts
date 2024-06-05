@@ -1,4 +1,4 @@
-import { createImagesWorker } from "frames.js/middleware/images-worker/next";
+import { createImagesWorker } from 'frames.js/middleware/images-worker/next';
 
 const imagesWorker = createImagesWorker({
     imageOptions: {

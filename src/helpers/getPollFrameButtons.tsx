@@ -9,9 +9,9 @@ import { Poll } from '@/types';
 
 interface Parameters {
     poll: Poll;
-    queryData: ImageQuery
+    queryData: ImageQuery;
     profileId?: string;
-    newVotedIdx?: number
+    newVotedIdx?: number;
 }
 
 export const getPollFrameButtons = ({ poll, newVotedIdx, profileId, queryData }: Parameters) => {

@@ -3,7 +3,12 @@ import { kv } from '@vercel/kv';
 import { POLL_EXPIRY } from '@/constants';
 import { FRAME_SOURCE } from '@/constants/enum';
 
-export const vote = async (pollId: string, buttonIdx: number, profileId: string, source: FRAME_SOURCE): Promise<boolean> => {
+export const vote = async (
+    pollId: string,
+    buttonIdx: number,
+    profileId: string,
+    source: FRAME_SOURCE,
+): Promise<boolean> => {
     const multi = kv.multi();
     const kvKey = `poll:${source}_${pollId}`;
 

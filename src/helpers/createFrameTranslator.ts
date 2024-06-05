@@ -1,5 +1,5 @@
-import { locales } from "@/config/frameLocales";
-import { LOCALE } from "@/constants/enum";
+import { locales } from '@/config/frameLocales';
+import { LOCALE } from '@/constants/enum';
 
 const originalToKey = (original: string) => {
     return original.toLowerCase().replace(/ /g, '_');

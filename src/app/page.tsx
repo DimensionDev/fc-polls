@@ -1,4 +1,4 @@
-import { PollCreator } from "@/components/PollCreator";
+import { PollCreator } from '@/components/PollCreator';
 
 export const metadata = {
     title: 'Farcaster polls',
@@ -7,7 +7,7 @@ export const metadata = {
 
 export default async function Page() {
     return (
-        <div className="flex justify-center items-center w-screen h-screen">
+        <div className="flex h-screen w-screen items-center justify-center">
             <PollCreator />
         </div>
     );

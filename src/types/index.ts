@@ -1,11 +1,11 @@
-import { FRAME_SOURCE, POLL_STATUS } from "@/constants/enum";
+import { FRAME_SOURCE, POLL_STATUS } from '@/constants/enum';
 
 export interface PollOption {
     id: string;
     text: string;
     votes: number;
     voted?: boolean;
-};
+}
 
 export type Poll = {
     id: string;
@@ -33,7 +33,7 @@ export interface FrameButton {
     text: string;
     action: string;
     target?: string;
-};
+}
 
 export type FrameData = {
     image: string;
