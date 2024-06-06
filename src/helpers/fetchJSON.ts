@@ -1,4 +1,3 @@
-
 import { fetch } from '@/helpers/fetch';
 import { getNextFetchers, type NextFetchersOptions } from '@/helpers/getNextFetchers';
 

@@ -1,6 +1,6 @@
-import { FRAME_SOURCE, POLL_STATUS } from "@/constants/enum";
-import { Poll } from "@/types";
-import { Poll as FireflyPoll } from "@/types/api";
+import { FRAME_SOURCE, POLL_STATUS } from '@/constants/enum';
+import { Poll } from '@/types';
+import { Poll as FireflyPoll } from '@/types/api';
 
 export const formatFireflyPoll = (fireflyPoll: FireflyPoll, source: FRAME_SOURCE): Poll => {
     return {

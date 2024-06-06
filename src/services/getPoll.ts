@@ -1,4 +1,3 @@
-
 import urlcat from 'urlcat';
 
 import { FIREFLY_ROOT_URL } from '@/constants';

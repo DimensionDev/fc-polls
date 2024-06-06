@@ -22,4 +22,4 @@ export interface Poll {
     }>;
 }
 
-export type GetPollResponse = Response<Poll>
+export type GetPollResponse = Response<Poll>;
