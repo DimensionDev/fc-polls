@@ -4,6 +4,12 @@ export enum VERCEL_NEV {
     Development = 'development',
 }
 
+export enum NODE_ENV {
+    Production = 'production',
+    Development = 'development',
+    Test = 'test',
+}
+
 export enum POLL_STATUS {
     Active = 'active',
     Closed = 'closed',

@@ -4,14 +4,12 @@ import { frames } from '@/config/frames';
 import { IMAGE_QUERY_SCHEMA } from '@/constants/zod';
 import { getPollFrameButtons } from '@/helpers/getPollFrameButtons';
 import { getPollFrameImage } from '@/helpers/getPollFrameImage';
-import { resolveFrameSource } from '@/helpers/resolveFrameSource';
 import { getPoll } from '@/services/getPoll';
 import { Poll } from '@/types';
 
 const handleRequest = frames(async (ctx) => {
     const queryData = IMAGE_QUERY_SCHEMA.parse(ctx.searchParams);
-    const { id, profileId, theme } = queryData;
-    const source = ctx.clientProtocol?.id ? resolveFrameSource(ctx.clientProtocol.id) : null;
+    const { id, profileId, theme, source } = queryData;
     let poll: Poll | null = null;
 
     if (id && source) {

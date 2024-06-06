@@ -23,7 +23,6 @@ const PollSchema = z.object({
         .min(1, 'Poll title must be not empty.')
         .max(MAX_CHARS_POLL_TITLE, `Poll title must be less than ${MAX_CHARS_POLL_TITLE} characters.`),
     poll: z.object({
-        id: z.string(),
         options: z
             .array(
                 z.object({
