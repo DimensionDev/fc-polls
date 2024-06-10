@@ -1,4 +1,4 @@
-import { PollTheme } from "@/types";
+import { PollTheme } from '@/types';
 
 interface ErrorHandlerProps {
     text: string;
@@ -15,11 +15,15 @@ export function ErrorHandler({ text, theme }: ErrorHandlerProps) {
                 backgroundColor: theme.cardBgColor,
             }}
         >
-            <h1 style={{
-                textAlign: 'center',
-                fontSize: '18px',
-                color: theme.optionTextColor,
-            }}>{text}</h1>
+            <h1
+                style={{
+                    textAlign: 'center',
+                    fontSize: '18px',
+                    color: theme.optionTextColor,
+                }}
+            >
+                {text}
+            </h1>
         </div>
     );
 }

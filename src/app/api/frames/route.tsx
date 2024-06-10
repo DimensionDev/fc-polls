@@ -1,4 +1,3 @@
-
 import { frames } from '@/config/frames';
 import { IMAGE_QUERY_SCHEMA, ImageQuery } from '@/constants/zod';
 import { createFrameErrorResponse } from '@/helpers/createFrameErrorResponse';
@@ -12,17 +11,17 @@ const handleRequest = frames(async (ctx) => {
         queryData = IMAGE_QUERY_SCHEMA.parse(ctx.searchParams);
         const { id, profileId, source, locale } = queryData;
         const t = createFrameTranslator(locale);
-        const poll = await getPoll(id, source, profileId)
+        const poll = await getPoll(id, source, profileId);
 
         if (!poll) {
-            throw new Error(t`No poll found via pollId="${id}"`)
+            throw new Error(t`No poll found via pollId="${id}"`);
         }
 
         return createFrameSuccessResponse(poll, queryData);
     } catch (error) {
         return createFrameErrorResponse({
             text: error instanceof Error ? error.message : `${error}`,
-            queryData
+            queryData,
         });
     }
 });

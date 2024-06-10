@@ -20,14 +20,9 @@ export const createFrameErrorResponse = ({ text, noBack = false, queryData }: Cr
 
     return {
         image: <ErrorHandler text={text} theme={themeConfig} />,
-        buttons: noBack || !queryData
-            ? []
-            : [
-                  <Button
-                      key={0}
-                      action="post"
-                      target={urlcat(`/`, queryData)}
-                  >{t`Back to poll`}</Button>,
-              ],
+        buttons:
+            noBack || !queryData
+                ? []
+                : [<Button key={0} action="post" target={urlcat(`/`, queryData)}>{t`Back to poll`}</Button>],
     };
 };

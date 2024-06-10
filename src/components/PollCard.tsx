@@ -8,7 +8,7 @@ import { ChoiceDetail, Poll } from '@/types/api';
 export interface PollCardProps {
     poll: Poll;
     theme: IMAGE_THEME;
-    locale: LOCALE
+    locale: LOCALE;
 }
 
 interface VoteButtonProps {
@@ -135,16 +135,20 @@ export function PollCard({ poll, theme, locale }: PollCardProps) {
                     ),
                 )}
             </div>
-            <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                width: '100%',
-                color: themeConfig.secondTextColor,
-                fontSize: 12,
-                padding: 20,
-                gap: 20,
-            }}>
-                <span>{vote_count} Votes · {getPollTimeLeft(poll, locale)}</span>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                    color: themeConfig.secondTextColor,
+                    fontSize: 12,
+                    padding: 20,
+                    gap: 20,
+                }}
+            >
+                <span>
+                    {vote_count} Votes · {getPollTimeLeft(poll, locale)}
+                </span>
                 <span>via Firefly</span>
             </div>
         </div>

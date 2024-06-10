@@ -1,4 +1,4 @@
-import { LensFrameRequest } from "@/types/lens";
+import { LensFrameRequest } from '@/types/lens';
 
 export function isLensFrameActionPayload(frameActionPayload: unknown): frameActionPayload is LensFrameRequest {
     return (

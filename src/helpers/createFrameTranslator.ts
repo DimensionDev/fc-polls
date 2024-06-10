@@ -15,7 +15,7 @@ export const createFrameTranslator = (locale: LOCALE) => {
             return chunks.reduce((acc, chunk, index) => {
                 return acc + chunk + (index === chunks.length - 1 ? '' : params[index]);
             }, '');
-        };
+        }
         return currentLocale[key].replace(DYNAMIC_CHUNK, (_, index) => {
             return String(params[index]);
         });

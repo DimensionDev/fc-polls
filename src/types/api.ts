@@ -1,4 +1,4 @@
-import { FRAME_SOURCE } from "@/constants/enum";
+import { FRAME_SOURCE } from '@/constants/enum';
 
 export interface Response<T> {
     code: number;
@@ -12,7 +12,7 @@ export interface ChoiceDetail {
     count: number;
     is_select: boolean;
     percent: number;
-};
+}
 
 export interface Poll {
     poll_id: string;
@@ -37,7 +37,7 @@ export interface VoteRequest {
     wallet_address: string;
     original_message: string;
     signature_message: string;
-};
+}
 
 export type VoteResponse = Response<{
     is_success: boolean;
