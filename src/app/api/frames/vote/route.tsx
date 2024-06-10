@@ -1,66 +1,56 @@
-import { error } from 'frames.js/core';
-import { StatusCodes } from 'http-status-codes';
-
 import { frames } from '@/config/frames';
-import { PER_USER_VOTE_LIMIT, POLL_OPTIONS_MAX_COUNT } from '@/constants';
-import { FRAME_SOURCE, POLL_STATUS } from '@/constants/enum';
-import { IMAGE_QUERY_SCHEMA } from '@/constants/zod';
-import { getPollFrameButtons } from '@/helpers/getPollFrameButtons';
-import { getPollFrameImage } from '@/helpers/getPollFrameImage';
-import { isCreatedByProfileId } from '@/helpers/isCreatedByProfileId';
-import { resolveFrameSource } from '@/helpers/resolveFrameSource';
+import { FRAME_SOURCE } from '@/constants/enum';
+import { IMAGE_QUERY_SCHEMA, ImageQuery } from '@/constants/zod';
+import { createFrameErrorResponse } from '@/helpers/createFrameErrorResponse';
+import { createFrameSuccessResponse } from '@/helpers/createFrameSuccessResponse';
+import { parseFrameCtx } from '@/helpers/parseFrameCtx';
+import { parsePollWithZod } from '@/helpers/parsePollWithZod';
 import { getPoll } from '@/services/getPoll';
 import { vote } from '@/services/vote';
 
 export const POST = frames(async (ctx) => {
-    if (!ctx.message?.isValid) {
-        error(`Got invalid message: message=${ctx.message}`, StatusCodes.BAD_REQUEST);
+    let queryData: ImageQuery | null = null;
+    try {
+        queryData = IMAGE_QUERY_SCHEMA.parse(ctx.searchParams);
+        const { id: pollId, locale, source } = queryData;
+
+        const {
+            profileId: pId,
+            buttonIndex,
+            requesterFid,
+            requesterCustodyAddress,
+        } = parseFrameCtx(ctx.message, locale);
+        const isFarcaster = source === FRAME_SOURCE.Farcaster;
+        const profileId = isFarcaster ? `${requesterFid}` : pId;
+
+        const poll = parsePollWithZod(await getPoll(pollId, source, profileId), locale, buttonIndex);
+
+        const body = await ctx.request.json();
+
+        const voteResult = await vote(
+            {
+                poll_id: pollId,
+                platform: source,
+                platform_id: `${isFarcaster ? requesterFid : profileId}`,
+                choices: [poll.choice_detail[buttonIndex - 1].id],
+                lens_token: isFarcaster ? '' : body.untrustedData.identityToken,
+                farcaster_signature: isFarcaster ? body.trustedData.messageBytes : '',
+                wallet_address: requesterCustodyAddress,
+                original_message: body.untrustedData,
+                signature_message: body.trustedData.messageBytes,
+            },
+            locale,
+        );
+
+        if (voteResult?.is_success) {
+            poll.choice_detail = voteResult.choice_detail;
+        }
+
+        return createFrameSuccessResponse(poll, queryData);
+    } catch (error) {
+        return createFrameErrorResponse({
+            text: error instanceof Error ? error.message : `${error}`,
+            queryData: queryData ? { ...queryData, date: `${Date.now()}` } : null,
+        });
     }
-
-    const source = ctx.clientProtocol?.id ? resolveFrameSource(ctx.clientProtocol.id) : null;
-    if (!source) {
-        error(`Not supported frame client protocol: ${ctx.clientProtocol?.id}`, StatusCodes.BAD_REQUEST);
-    }
-
-    const isFarcaster = source === FRAME_SOURCE.Farcaster;
-
-    const { profileId: pId, buttonIndex, castId, pubId, requesterFid } = ctx.message;
-    const profileId = isFarcaster ? `${requesterFid}` : pId;
-    const postId = isFarcaster ? castId?.hash : pubId;
-
-    if (!profileId || buttonIndex < 1 || buttonIndex > POLL_OPTIONS_MAX_COUNT) {
-        error(`Got invalid parameters: profileId=${profileId}, buttonIndex=${buttonIndex}`, StatusCodes.BAD_REQUEST);
-    }
-
-    const queryData = IMAGE_QUERY_SCHEMA.parse(ctx.searchParams);
-    const { id: pollId, theme } = queryData;
-    if (!pollId) {
-        error(`Missing PollId in frame state`, StatusCodes.BAD_REQUEST);
-    }
-
-    const poll = await getPoll(pollId, source, profileId);
-    if (!poll) {
-        error(`No valid poll found via pollId = ${pollId}`, StatusCodes.BAD_REQUEST);
-    }
-
-    if (poll.status !== POLL_STATUS.Active) {
-        error(`The poll is unavailable via pollId = ${pollId}`);
-    }
-
-    const votedLen = poll.options.filter((opt) => opt.voted).length;
-    if (votedLen >= PER_USER_VOTE_LIMIT) {
-        error(`You have voted ${votedLen} times, cannot vote again`);
-    }
-
-    let voteSuccess = false;
-    if (!poll.options[buttonIndex - 1]?.voted && !isCreatedByProfileId(poll, profileId)) {
-        voteSuccess = await vote(pollId, buttonIndex, profileId, source);
-    }
-
-    const newVotedIdx = voteSuccess ? buttonIndex : undefined;
-
-    return {
-        image: getPollFrameImage({ poll, theme, profileId, newVotedIdx, locale: queryData.locale }),
-        buttons: getPollFrameButtons({ poll, profileId, newVotedIdx, queryData }),
-    };
 });

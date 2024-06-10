@@ -1,5 +1,7 @@
-import { getLensFrameMessage, isLensFrameActionPayload } from 'frames.js/lens';
 import { openframes } from 'frames.js/middleware';
+
+import { getLensFrameMessage } from '@/helpers/getLensFrameMessage';
+import { isLensFrameActionPayload } from '@/helpers/isLensFrameActionPayload';
 
 export const lensFrame = openframes({
     clientProtocol: {

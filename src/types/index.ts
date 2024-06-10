@@ -24,8 +24,10 @@ export type PollTheme = {
     titleColor: string;
     optionBgColor: string;
     optionTextColor: string;
+    optionSelectedTextColor: string;
     optionSelectedBgColor: string;
     cardBgColor: string;
+    secondTextColor: string;
 };
 
 export interface FrameButton {

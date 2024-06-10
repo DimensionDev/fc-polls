@@ -1,17 +1,12 @@
 import { PollCard } from '@/components/PollCard';
-import { LOCALE } from '@/constants/enum';
-import { IMAGE_THEME } from '@/constants/theme';
-import { Poll } from '@/types';
+import { ImageQuery } from '@/constants/zod';
+import { Poll } from '@/types/api';
 
 interface Parameters {
     poll: Poll;
-    theme: IMAGE_THEME;
-    profileId?: string;
-    newVotedIdx?: number;
-    // we dont use this now
-    locale?: LOCALE;
+    queryData: ImageQuery;
 }
 
-export const getPollFrameImage = ({ poll, theme, profileId, newVotedIdx }: Parameters) => {
-    return <PollCard poll={poll} theme={theme} profileId={profileId} newVotedIdx={newVotedIdx} />;
+export const getPollFrameImage = ({ poll, queryData: { theme, locale } }: Parameters) => {
+    return <PollCard poll={poll} theme={theme} locale={locale} />;
 };

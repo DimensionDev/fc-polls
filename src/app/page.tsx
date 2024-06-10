@@ -1,8 +1,8 @@
 import { PollCreator } from '@/components/PollCreator';
 
 export const metadata = {
-    title: 'Farcaster polls',
-    description: 'Poll example for farcaster',
+    title: 'Polls',
+    description: 'Create and share your polls with Frame.',
 };
 
 export default async function Page() {

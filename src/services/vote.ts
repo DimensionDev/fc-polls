@@ -1,21 +1,20 @@
-import { kv } from '@vercel/kv';
+import urlcat from 'urlcat';
 
-import { POLL_EXPIRY } from '@/constants';
-import { FRAME_SOURCE } from '@/constants/enum';
+import { FIREFLY_ROOT_URL } from '@/constants';
+import { LOCALE } from '@/constants/enum';
+import { createFrameTranslator } from '@/helpers/createFrameTranslator';
+import { fetchJSON } from '@/helpers/fetchJSON';
+import { VoteRequest, VoteResponse } from '@/types/api';
 
-export const vote = async (
-    pollId: string,
-    buttonIdx: number,
-    profileId: string,
-    source: FRAME_SOURCE,
-): Promise<boolean> => {
-    const multi = kv.multi();
-    const kvKey = `poll:${source}_${pollId}`;
+export const vote = async (options: VoteRequest, locale: LOCALE): Promise<VoteResponse['data']> => {
+    const t = createFrameTranslator(locale);
+    const response = await fetchJSON<VoteResponse>(urlcat(FIREFLY_ROOT_URL, '/v1/vote_frame/poll/vote'), {
+        method: 'POST',
+        body: JSON.stringify(options),
+    });
+    if (!response.data) {
+        throw new Error(response.error?.join(',') ?? t`Vote failed`);
+    }
 
-    multi.hincrby(kvKey, `votes${buttonIdx}`, 1);
-    multi.sadd(`${kvKey}:voted`, profileId);
-    multi.expire(kvKey, POLL_EXPIRY);
-    multi.expire(`${kvKey}:voted`, POLL_EXPIRY);
-    await multi.exec();
-    return true;
+    return response.data;
 };

@@ -6,19 +6,19 @@ import { lensFrame } from '@/config/lensFrame';
 import { env } from '@/constants/env';
 
 const hubRequestHeaders: Record<string, string> = {};
-if (env.external.HUB_API_KEY) {
-    hubRequestHeaders.api_key = env.external.HUB_API_KEY;
+if (env.external.NEXT_PUBLIC_HUB_API_KEY) {
+    hubRequestHeaders.api_key = env.external.NEXT_PUBLIC_HUB_API_KEY;
 }
 
 export const frames = createFrames({
-    baseUrl: env.external.HOST,
+    baseUrl: env.external.NEXT_PUBLIC_HOST,
     basePath: '/api/frames',
     middleware: [
         imagesWorkerMiddleware({
             imagesRoute: '/images',
         }),
         farcasterHubContext({
-            hubHttpUrl: env.external.HUB_URL,
+            hubHttpUrl: env.external.NEXT_PUBLIC_HUB_URL,
             hubRequestOptions: {
                 headers: hubRequestHeaders,
             },

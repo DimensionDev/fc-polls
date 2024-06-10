@@ -1,29 +1,30 @@
-import { error } from 'frames.js/core';
 
 import { frames } from '@/config/frames';
-import { IMAGE_QUERY_SCHEMA } from '@/constants/zod';
-import { getPollFrameButtons } from '@/helpers/getPollFrameButtons';
-import { getPollFrameImage } from '@/helpers/getPollFrameImage';
+import { IMAGE_QUERY_SCHEMA, ImageQuery } from '@/constants/zod';
+import { createFrameErrorResponse } from '@/helpers/createFrameErrorResponse';
+import { createFrameSuccessResponse } from '@/helpers/createFrameSuccessResponse';
+import { createFrameTranslator } from '@/helpers/createFrameTranslator';
 import { getPoll } from '@/services/getPoll';
-import { Poll } from '@/types';
 
 const handleRequest = frames(async (ctx) => {
-    const queryData = IMAGE_QUERY_SCHEMA.parse(ctx.searchParams);
-    const { id, profileId, theme, source } = queryData;
-    let poll: Poll | null = null;
+    let queryData: ImageQuery | null = null;
+    try {
+        queryData = IMAGE_QUERY_SCHEMA.parse(ctx.searchParams);
+        const { id, profileId, source, locale } = queryData;
+        const t = createFrameTranslator(locale);
+        const poll = await getPoll(id, source, profileId)
 
-    if (id && source) {
-        poll = await getPoll(id, source, profileId);
+        if (!poll) {
+            throw new Error(t`No poll found via pollId="${id}"`)
+        }
+
+        return createFrameSuccessResponse(poll, queryData);
+    } catch (error) {
+        return createFrameErrorResponse({
+            text: error instanceof Error ? error.message : `${error}`,
+            queryData
+        });
     }
-
-    if (!poll) {
-        error(`Missing poll via pollId=${id} and clientProtocol=${source}`);
-    }
-
-    return {
-        image: getPollFrameImage({ poll, theme, profileId, locale: queryData.locale }),
-        buttons: getPollFrameButtons({ poll, profileId, queryData }),
-    };
 });
 
 export const GET = handleRequest;

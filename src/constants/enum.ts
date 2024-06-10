@@ -20,6 +20,11 @@ export enum FRAME_SOURCE {
     Farcaster = 'farcaster',
 }
 
+export enum POLL_CHOICE_TYPE {
+    Single = 'single-choice',
+    Multiple = 'multiple-choice',
+}
+
 export enum LOCALE {
     EN = 'en',
     ZH = 'zh',

@@ -1,39 +1,30 @@
 import { Button } from 'frames.js/next';
 
 import { PER_USER_VOTE_LIMIT } from '@/constants';
-import { POLL_STATUS } from '@/constants/enum';
+import { POLL_CHOICE_TYPE } from '@/constants/enum';
 import { ImageQuery } from '@/constants/zod';
+import { createFrameTranslator } from '@/helpers/createFrameTranslator';
 import { getPollFramePostUrl } from '@/helpers/getPollFramePostUrl';
-import { isCreatedByProfileId } from '@/helpers/isCreatedByProfileId';
-import { Poll } from '@/types';
+import { Poll } from '@/types/api';
 
 interface Parameters {
     poll: Poll;
     queryData: ImageQuery;
-    profileId?: string;
-    newVotedIdx?: number;
 }
 
-export const getPollFrameButtons = ({ poll, newVotedIdx, profileId, queryData }: Parameters) => {
+export const getPollFrameButtons = ({ poll, queryData }: Parameters) => {
     const postTarget = getPollFramePostUrl(queryData);
-    const votedIdxList =
-        poll.options.reduce(
-            (acc, opt, index) => {
-                return opt.voted ? [...acc, index + 1] : acc;
-            },
-            newVotedIdx ? [newVotedIdx] : [],
-        ) ?? [];
-    if (
-        poll.status !== POLL_STATUS.Active ||
-        isCreatedByProfileId(poll, profileId) ||
-        votedIdxList.length >= PER_USER_VOTE_LIMIT
-    ) {
+    const t = createFrameTranslator(queryData.locale);
+    const votedList = poll.choice_detail.filter((choice) => choice.is_select);
+    const maxVoteCount = poll.type === POLL_CHOICE_TYPE.Multiple ? poll.multiple_count : PER_USER_VOTE_LIMIT;
+
+    if (poll.is_end || votedList.length >= maxVoteCount) {
         return [];
     }
 
-    return poll.options.map((opt, index) => (
+    return poll.choice_detail.map((choice, index) => (
         <Button key={index} action="post" target={postTarget}>
-            {opt.text}
+            {choice.name}
         </Button>
     ));
 };

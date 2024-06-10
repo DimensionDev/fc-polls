@@ -1,14 +1,14 @@
-import { POLL_STATUS } from '@/constants/enum';
+import { LOCALE } from '@/constants/enum';
 import { env } from '@/constants/env';
 import { IMAGE_THEME, THEME_CONFIG } from '@/constants/theme';
-import { isCreatedByProfileId } from '@/helpers/isCreatedByProfileId';
-import { Poll, PollOption, PollTheme } from '@/types';
+import { getPollTimeLeft } from '@/helpers/getPollTimeLeft';
+import { PollTheme } from '@/types';
+import { ChoiceDetail, Poll } from '@/types/api';
 
 export interface PollCardProps {
     poll: Poll;
     theme: IMAGE_THEME;
-    newVotedIdx?: number;
-    profileId?: string;
+    locale: LOCALE
 }
 
 interface VoteButtonProps {
@@ -17,9 +17,7 @@ interface VoteButtonProps {
 }
 
 interface VoteResultProps {
-    option: PollOption;
-    totalVotes: number;
-    isUserVoted: boolean;
+    choice: ChoiceDetail;
     theme: PollTheme;
 }
 
@@ -44,10 +42,7 @@ function VoteButton({ text, theme }: VoteButtonProps) {
     );
 }
 
-function VoteResult({ option, totalVotes, isUserVoted, theme }: VoteResultProps) {
-    const { text, votes = 0 } = option;
-    const currentRate = +totalVotes ? parseFloat(((votes / totalVotes) * 100).toFixed(2)) : 0;
-
+function VoteResult({ choice, theme }: VoteResultProps) {
     return (
         <div
             style={{
@@ -59,11 +54,11 @@ function VoteResult({ option, totalVotes, isUserVoted, theme }: VoteResultProps)
             <div
                 style={{
                     display: 'flex',
-                    width: currentRate ? `${currentRate}%` : '10px',
+                    width: choice.percent ? `${choice.percent}%` : '10px',
                     position: 'absolute',
                     height: '100%',
                     borderRadius: 10,
-                    backgroundColor: isUserVoted ? theme.optionSelectedBgColor : theme.optionBgColor,
+                    backgroundColor: choice.is_select ? theme.optionSelectedBgColor : theme.optionBgColor,
                 }}
             />
             <div
@@ -77,7 +72,7 @@ function VoteResult({ option, totalVotes, isUserVoted, theme }: VoteResultProps)
                     width: '100%',
                     fontSize: 16,
                     fontWeight: 'bold',
-                    color: theme.optionTextColor,
+                    color: choice.is_select ? theme.optionSelectedTextColor : theme.optionTextColor,
                 }}
             >
                 <span
@@ -87,10 +82,10 @@ function VoteResult({ option, totalVotes, isUserVoted, theme }: VoteResultProps)
                         gap: 8,
                     }}
                 >
-                    <span style={{ display: 'flex' }}>{text}</span>
-                    {isUserVoted ? (
+                    <span style={{ display: 'flex' }}>{choice.name}</span>
+                    {choice.is_select ? (
                         <img
-                            src={`${env.external.HOST}/tick-circle.png`}
+                            src={`${env.external.NEXT_PUBLIC_HOST}/tick-circle.png`}
                             style={{
                                 display: 'flex',
                                 width: 20,
@@ -99,31 +94,23 @@ function VoteResult({ option, totalVotes, isUserVoted, theme }: VoteResultProps)
                         />
                     ) : null}
                 </span>
-                <span style={{ display: 'flex' }}>{currentRate}%</span>
+                <span style={{ display: 'flex' }}>{choice.percent}%</span>
             </div>
         </div>
     );
 }
 
-export function PollCard({ poll, theme, newVotedIdx, profileId }: PollCardProps) {
-    const { status, options, totalVotes } = poll;
+export function PollCard({ poll, theme, locale }: PollCardProps) {
+    const { is_end, choice_detail, vote_count } = poll;
     const themeConfig = THEME_CONFIG[theme];
-
-    const votedIndexList = options.reduce<number[]>(
-        (acc, option, index) => {
-            return option.voted ? [...acc, index + 1] : acc;
-        },
-        newVotedIdx ? [newVotedIdx] : [],
-    );
-    const showResults =
-        status !== POLL_STATUS.Active || votedIndexList.length > 0 || isCreatedByProfileId(poll, profileId);
 
     return (
         <div
             style={{
-                justifyContent: 'flex-start',
-                alignItems: 'center',
                 display: 'flex',
+                alignItems: 'flex-end',
+                justifyContent: 'center',
+                flexDirection: 'column',
                 width: '100%',
                 height: '100%',
                 backgroundColor: themeConfig.cardBgColor,
@@ -140,20 +127,25 @@ export function PollCard({ poll, theme, newVotedIdx, profileId }: PollCardProps)
                     padding: 20,
                 }}
             >
-                {/* <h2 style={{ textAlign: 'center', color: themeConfig.titleColor }}>{title}</h2> */}
-                {options.map((opt, index) =>
-                    showResults ? (
-                        <VoteResult
-                            key={index}
-                            option={opt}
-                            totalVotes={totalVotes}
-                            theme={themeConfig}
-                            isUserVoted={votedIndexList.includes(index + 1)}
-                        />
+                {choice_detail.map((choice, index) =>
+                    is_end || choice_detail.some((choice) => choice.is_select) ? (
+                        <VoteResult key={index} choice={choice} theme={themeConfig} />
                     ) : (
-                        <VoteButton key={index} theme={themeConfig} text={opt.text} />
+                        <VoteButton key={index} theme={themeConfig} text={choice.name} />
                     ),
                 )}
+            </div>
+            <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%',
+                color: themeConfig.secondTextColor,
+                fontSize: 12,
+                padding: 20,
+                gap: 20,
+            }}>
+                <span>{vote_count} Votes · {getPollTimeLeft(poll, locale)}</span>
+                <span>via Firefly</span>
             </div>
         </div>
     );
