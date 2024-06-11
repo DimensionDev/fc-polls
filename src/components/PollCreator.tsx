@@ -24,12 +24,15 @@ export function PollCreator() {
                 return;
             }
             setLoading(true);
-            const pollId = await savePoll({
-                options: options.map((text) => ({ text, id: uuid(), votes: 0 })),
-                duration: { days: MIN_VALID_IN_DAYS, hours: 0, minutes: 0 },
-                type: POLL_CHOICE_TYPE.Single,
-                strategies: '[]',
-            }, question);
+            const pollId = await savePoll(
+                {
+                    options: options.map((text) => ({ text, id: uuid(), votes: 0 })),
+                    duration: { days: MIN_VALID_IN_DAYS, hours: 0, minutes: 0 },
+                    type: POLL_CHOICE_TYPE.Single,
+                    strategies: '[]',
+                },
+                question,
+            );
             window.location.href = `/polls/${pollId}`;
         } catch (error) {
             if (error instanceof Error) {

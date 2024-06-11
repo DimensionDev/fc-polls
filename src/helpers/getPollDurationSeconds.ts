@@ -1,4 +1,4 @@
-import { CompositePoll } from "@/types";
+import { CompositePoll } from '@/types';
 
 export const getPollDurationSeconds = (duration: CompositePoll['duration']) => {
     const { days, hours, minutes } = duration;

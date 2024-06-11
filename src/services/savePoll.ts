@@ -20,13 +20,10 @@ export const savePoll = async (poll: CompositePoll, text: string): Promise<strin
         request.multiple_count = poll.multiple_count;
     }
 
-    const response = await fetchJSON<CreatePollResponse>(
-        urlcat(FIREFLY_ROOT_URL, '/v1/vote_frame/poll/create'),
-        {
-            method: 'POST',
-            body: JSON.stringify(request),
-        },
-    );
+    const response = await fetchJSON<CreatePollResponse>(urlcat(FIREFLY_ROOT_URL, '/v1/vote_frame/poll/create'), {
+        method: 'POST',
+        body: JSON.stringify(request),
+    });
 
     if (!response.data?.poll_id) throw new Error('Failed to create poll');
 

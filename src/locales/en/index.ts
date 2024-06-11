@@ -14,11 +14,11 @@ const locales = {
     'You have already voted for this choice': 'You have already voted for this choice',
     'No poll found': 'No poll found',
     'No profile found': 'No profile found',
-    'Expired': 'Expired',
+    Expired: 'Expired',
     '_ day_ left': '{0} day{1} left',
     '_ hour_ left': '{0} hour{1} left',
     '_ minute_ left': '{0} minute{1} left',
     'Less than a minute left': 'Less than a minute left',
-}
+};
 
-export default locales
+export default locales;

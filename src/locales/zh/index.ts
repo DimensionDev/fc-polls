@@ -14,11 +14,11 @@ const locales = {
     'You have already voted for this choice': '您已经投票给这个选项了',
     'No poll found': '找不到投票',
     'No profile found': '找不到用户',
-    'Expired': '已过期',
+    Expired: '已过期',
     '_ day_ left': '剩余{0}天',
     '_ hour_ left': '剩余{0}小时',
     '_ minute_ left': '剩余{0}分钟',
     'Less than a minute left': '剩余不到一分钟',
-}
+};
 
-export default locales
+export default locales;

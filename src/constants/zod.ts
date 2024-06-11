@@ -3,7 +3,6 @@ import { z } from 'zod';
 import { FRAME_SOURCE, LOCALE } from '@/constants/enum';
 import { IMAGE_THEME } from '@/constants/theme';
 
-
 export const IMAGE_QUERY_SCHEMA = z.object({
     id: z.string(),
     profileId: z.string().optional(),
