@@ -2,6 +2,7 @@ import { LOCALE } from '@/constants/enum';
 import { env } from '@/constants/env';
 import { IMAGE_THEME, THEME_CONFIG } from '@/constants/theme';
 import { getPollTimeLeft } from '@/helpers/getPollTimeLeft';
+import { indexToLetter } from '@/helpers/indexToLetter';
 import { PollTheme } from '@/types';
 import { ChoiceDetail, Poll } from '@/types/api';
 
@@ -131,7 +132,7 @@ export function PollCard({ poll, theme, locale }: PollCardProps) {
                     is_end || choice_detail.some((choice) => choice.is_select) ? (
                         <VoteResult key={index} choice={choice} theme={themeConfig} />
                     ) : (
-                        <VoteButton key={index} theme={themeConfig} text={choice.name} />
+                        <VoteButton key={index} theme={themeConfig} text={`${indexToLetter(index)}. ${choice.name}`} />
                     ),
                 )}
             </div>
