@@ -1,13 +1,8 @@
 {
     "version": "0.1",
     "language": "en",
-    "words": [
-        "farcaster"
-    ],
-    "ignoreWords": [
-        "urlcat",
-        "openframes"
-    ],
+    "words": ["farcaster"],
+    "ignoreWords": ["urlcat", "openframes"],
     "flagWords": [],
     "ignorePaths": [
         "pnpm-lock.yaml",
