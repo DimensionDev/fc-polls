@@ -1,8 +1,13 @@
 {
     "version": "0.1",
     "language": "en",
-    "words": ["farcaster"],
-    "ignoreWords": ["hset", "hget", "zadd", "hincrby", "hgetall", "zrange", "sismember", "hincrby", "sadd"],
+    "words": [
+        "farcaster"
+    ],
+    "ignoreWords": [
+        "urlcat",
+        "openframes"
+    ],
     "flagWords": [],
     "ignorePaths": [
         "pnpm-lock.yaml",
