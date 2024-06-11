@@ -1,4 +1,4 @@
-import { FRAME_SOURCE } from '@/constants/enum';
+import { FRAME_SOURCE, POLL_CHOICE_TYPE } from '@/constants/enum';
 
 export interface Response<T> {
     code: number;
@@ -42,4 +42,17 @@ export interface VoteRequest {
 export type VoteResponse = Response<{
     is_success: boolean;
     choice_detail: ChoiceDetail[];
+}>;
+
+export interface CreatePollRequest {
+    title: string;
+    choices: string[];
+    type: POLL_CHOICE_TYPE;
+    multiple_count?: string;
+    sub_time: number;
+    strategies: string;
+}
+
+export type CreatePollResponse = Response<{
+    poll_id: string;
 }>;

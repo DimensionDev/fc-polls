@@ -4,7 +4,7 @@ import { POLL_OPTIONS_MAX_COUNT } from '@/constants';
 import { LOCALE } from '@/constants/enum';
 import { createFrameTranslator } from '@/helpers/createFrameTranslator';
 
-export const parseFrameCtx = (ctx: unknown, locale: LOCALE) => {
+export const parseFrameCtxZod = (ctx: unknown, locale: LOCALE) => {
     const t = createFrameTranslator(locale);
     const schema = z
         .object({

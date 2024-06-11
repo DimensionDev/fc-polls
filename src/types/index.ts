@@ -1,4 +1,4 @@
-import { FRAME_SOURCE, POLL_STATUS } from '@/constants/enum';
+import { POLL_CHOICE_TYPE } from '@/constants/enum';
 
 export interface PollOption {
     id: string;
@@ -7,18 +7,18 @@ export interface PollOption {
     voted?: boolean;
 }
 
-export type Poll = {
-    id: string;
-    title: string;
-    /** author */
-    created_by: string;
-    source: FRAME_SOURCE;
-    created_at: number;
-    status: POLL_STATUS;
-    totalVotes: number;
-    validInDays: number;
+export interface CompositePoll {
+    id?: string;
     options: PollOption[];
-};
+    duration: {
+        days: number;
+        hours: number;
+        minutes: number;
+    };
+    type: POLL_CHOICE_TYPE;
+    multiple_count?: string;
+    strategies: string;
+}
 
 export type PollTheme = {
     titleColor: string;

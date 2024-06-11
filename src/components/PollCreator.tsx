@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 
 import { MIN_VALID_IN_DAYS } from '@/constants';
-import { FRAME_SOURCE } from '@/constants/enum';
+import { POLL_CHOICE_TYPE } from '@/constants/enum';
+import { savePoll } from '@/services/savePoll';
 
 const defaultOptions = [1, 2, 3, 4];
 
@@ -23,28 +24,13 @@ export function PollCreator() {
                 return;
             }
             setLoading(true);
-            const response = await fetch('/api/poll', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    text: question,
-                    poll: {
-                        id: uuid(),
-                        options: options.map((option) => ({
-                            id: uuid(),
-                            label: option,
-                        })),
-                        validInDays: MIN_VALID_IN_DAYS,
-                        source: FRAME_SOURCE.Farcaster,
-                    },
-                }),
-            }).then((res) => res.json());
-            if (!response.success) {
-                throw new Error(response.error?.message || 'An error occurred');
-            }
-            window.location.href = `/polls/${response.data.pollId}`;
+            const pollId = await savePoll({
+                options: options.map((text) => ({ text, id: uuid(), votes: 0 })),
+                duration: { days: MIN_VALID_IN_DAYS, hours: 0, minutes: 0 },
+                type: POLL_CHOICE_TYPE.Single,
+                strategies: '[]',
+            }, question);
+            window.location.href = `/polls/${pollId}`;
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message);

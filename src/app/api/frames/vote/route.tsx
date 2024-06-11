@@ -3,7 +3,7 @@ import { FRAME_SOURCE } from '@/constants/enum';
 import { IMAGE_QUERY_SCHEMA, ImageQuery } from '@/constants/zod';
 import { createFrameErrorResponse } from '@/helpers/createFrameErrorResponse';
 import { createFrameSuccessResponse } from '@/helpers/createFrameSuccessResponse';
-import { parseFrameCtx } from '@/helpers/parseFrameCtx';
+import { parseFrameCtxZod } from '@/helpers/parseFrameCtxZod';
 import { parsePollWithZod } from '@/helpers/parsePollWithZod';
 import { getPoll } from '@/services/getPoll';
 import { vote } from '@/services/vote';
@@ -19,7 +19,7 @@ export const POST = frames(async (ctx) => {
             buttonIndex,
             requesterFid,
             requesterCustodyAddress,
-        } = parseFrameCtx(ctx.message, locale);
+        } = parseFrameCtxZod(ctx.message, locale);
         const isFarcaster = source === FRAME_SOURCE.Farcaster;
         const profileId = isFarcaster ? `${requesterFid}` : pId;
 
