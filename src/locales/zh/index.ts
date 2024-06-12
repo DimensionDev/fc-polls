@@ -21,7 +21,7 @@ const locales = {
     'Less than a minute left': '剩余不到一分钟',
     'Please fill all fields': '请填写所有字段',
     'An error occurred: _': '发生错误: {0}',
-    'Question': '问题',
+    Question: '问题',
     'Option _': '选项{0}',
     'Create Poll': '创建投票',
     'Creating...': '创建中...',

@@ -8,9 +8,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en" className={GeistSans.variable}>
             <body>
-                <LocaleProvider>
-                    {children}
-                </LocaleProvider>
+                <LocaleProvider>{children}</LocaleProvider>
             </body>
         </html>
     );

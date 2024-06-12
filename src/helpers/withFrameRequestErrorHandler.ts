@@ -1,11 +1,10 @@
+import { ZodError } from 'zod';
 
-import { ZodError } from "zod";
+import { frames } from '@/config/frames';
+import { IMAGE_QUERY_SCHEMA } from '@/constants/zod';
+import { createFrameErrorResponse } from '@/helpers/createFrameErrorResponse';
 
-import { frames } from "@/config/frames";
-import { IMAGE_QUERY_SCHEMA } from "@/constants/zod";
-import { createFrameErrorResponse } from "@/helpers/createFrameErrorResponse";
-
-type FrameRequestHandler = Parameters<typeof frames>[0]
+type FrameRequestHandler = Parameters<typeof frames>[0];
 
 const getErrorMessage = (error: unknown) => {
     if (error instanceof ZodError) {
@@ -15,7 +14,7 @@ const getErrorMessage = (error: unknown) => {
         );
     }
     return error instanceof Error ? error.message : `${error}`;
-}
+};
 
 export const withFrameRequestErrorHandler = () => {
     return (handler: FrameRequestHandler) => {
@@ -29,6 +28,6 @@ export const withFrameRequestErrorHandler = () => {
                     queryData: !success ? null : { ...data, date: `${Date.now()}` },
                 });
             }
-        }
+        };
     };
 };

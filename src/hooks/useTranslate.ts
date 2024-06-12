@@ -1,11 +1,11 @@
 import { createContext, useContext } from 'react';
 
-import { LOCALE } from "@/constants/enum";
-import { createFrameTranslator } from "@/helpers/createFrameTranslator";
+import { LOCALE } from '@/constants/enum';
+import { createFrameTranslator } from '@/helpers/createFrameTranslator';
 
 export const LocaleContext = createContext<{ locale: LOCALE }>({
-    locale: LOCALE.EN
-})
+    locale: LOCALE.EN,
+});
 
 export const useTranslate = () => {
     const { locale } = useContext(LocaleContext);

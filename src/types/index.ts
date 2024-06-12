@@ -1,4 +1,3 @@
-
 import { POLL_CHOICE_TYPE } from '@/constants/enum';
 
 type JsonObject = {

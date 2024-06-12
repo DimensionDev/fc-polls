@@ -21,7 +21,7 @@ const locales = {
     'Less than a minute left': 'Less than a minute left',
     'Please fill all fields': 'Please fill all fields',
     'An error occurred: _': 'An error occurred: {0}',
-    'Question': 'Question',
+    Question: 'Question',
     'Option _': 'Option {0}',
     'Create Poll': 'Create Poll',
     'Creating...': 'Creating...',
