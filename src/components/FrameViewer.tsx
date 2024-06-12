@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 import { IS_PRODUCTION } from '@/constants';
 import { collectFrameDataFromDocument } from '@/helpers/collectFrameDataFromDocument';
 
@@ -14,7 +16,7 @@ export function FrameViewer() {
     return (
         <div className="flex h-screen w-screen flex-col items-center justify-center">
             <div className="h-[400px] w-[600px]">
-                <img src={frameData.image} alt="Polls" />
+                <Image src={frameData.image} alt="Polls" />
             </div>
             <div className="mt-4 flex">
                 {frameData.buttons.map((button) => (

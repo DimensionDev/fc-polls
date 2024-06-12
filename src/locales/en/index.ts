@@ -19,6 +19,12 @@ const locales = {
     '_ hour_ left': '{0} hour{1} left',
     '_ minute_ left': '{0} minute{1} left',
     'Less than a minute left': 'Less than a minute left',
+    'Please fill all fields': 'Please fill all fields',
+    'An error occurred: _': 'An error occurred: {0}',
+    'Question': 'Question',
+    'Option _': 'Option {0}',
+    'Create Poll': 'Create Poll',
+    'Creating...': 'Creating...',
 };
 
 export default locales;

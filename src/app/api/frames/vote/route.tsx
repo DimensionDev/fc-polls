@@ -1,17 +1,17 @@
-import { frames } from '@/config/frames';
+import { FrameHandler, frames } from '@/config/frames';
 import { FRAME_SOURCE } from '@/constants/enum';
-import { IMAGE_QUERY_SCHEMA, ImageQuery } from '@/constants/zod';
-import { createFrameErrorResponse } from '@/helpers/createFrameErrorResponse';
+import { IMAGE_QUERY_SCHEMA } from '@/constants/zod';
+import { compose } from '@/helpers/compose';
 import { createFrameSuccessResponse } from '@/helpers/createFrameSuccessResponse';
 import { parseFrameCtxZod } from '@/helpers/parseFrameCtxZod';
 import { parsePollWithZod } from '@/helpers/parsePollWithZod';
+import { withFrameRequestErrorHandler } from '@/helpers/withFrameRequestErrorHandler';
 import { getPoll } from '@/services/getPoll';
 import { vote } from '@/services/vote';
 
-export const POST = frames(async (ctx) => {
-    let queryData: ImageQuery | null = null;
-    try {
-        queryData = IMAGE_QUERY_SCHEMA.parse(ctx.searchParams);
+export const POST = frames(
+    compose<FrameHandler>(withFrameRequestErrorHandler(), async (ctx) => {
+        const queryData = IMAGE_QUERY_SCHEMA.parse(ctx.searchParams);
         const { id: pollId, locale, source } = queryData;
 
         const {
@@ -47,10 +47,5 @@ export const POST = frames(async (ctx) => {
         }
 
         return createFrameSuccessResponse(poll, queryData);
-    } catch (error) {
-        return createFrameErrorResponse({
-            text: error instanceof Error ? error.message : `${error}`,
-            queryData: queryData ? { ...queryData, date: `${Date.now()}` } : null,
-        });
-    }
-});
+    }),
+);

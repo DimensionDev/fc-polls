@@ -4,6 +4,7 @@ import { createFrames } from 'frames.js/next';
 
 import { lensFrame } from '@/config/lensFrame';
 import { env } from '@/constants/env';
+import { FrameContext } from '@/types';
 
 const hubRequestHeaders: Record<string, string> = {};
 if (env.external.NEXT_PUBLIC_HUB_API_KEY) {
@@ -26,3 +27,5 @@ export const frames = createFrames({
         lensFrame,
     ],
 });
+
+export type FrameHandler = (ctx: FrameContext) => ReturnType<Parameters<typeof frames>[0]>;

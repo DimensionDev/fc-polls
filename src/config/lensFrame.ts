@@ -11,9 +11,7 @@ export const lensFrame = openframes({
     handler: {
         isValidPayload: (body: JSON) => isLensFrameActionPayload(body),
         getFrameMessage: async (body: JSON) => {
-            if (!isLensFrameActionPayload(body)) {
-                return undefined;
-            }
+            if (!isLensFrameActionPayload(body)) return;
             const result = await getLensFrameMessage(body);
 
             return { ...result };
