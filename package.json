@@ -9,6 +9,7 @@
     },
     "dependencies": {
         "@farcaster/hub-nodejs": "^0.11.11",
+        "@lens-protocol/client": "^2.2.0",
         "@types/node": "20.11.0",
         "@types/react": "18.2.47",
         "@types/react-dom": "18.2.18",
@@ -16,6 +17,7 @@
         "@vercel/kv": "^1.0.1",
         "autoprefixer": "10.4.16",
         "clsx": "^2.1.0",
+        "frames.js": "^0.16.4",
         "geist": "^1.2.1",
         "http-status-codes": "^2.3.0",
         "next": "latest",
@@ -26,16 +28,16 @@
         "sharp": "^0.33.2",
         "tailwindcss": "3.4.1",
         "typescript": "5.3.3",
+        "urlcat": "^3.1.0",
         "uuid": "^9.0.1",
+        "viem": "^2.13.6",
         "zod": "^3.23.8"
     },
     "devDependencies": {
-        "cspell": "^8.8.2",
-        "eslint": "^8.56.0",
-        "prettier": "^3.2.5",
-        "prettier-plugin-tailwindcss": "^0.5.14",
         "@typescript-eslint/eslint-plugin": "^7.10.0",
         "@typescript-eslint/parser": "^7.10.0",
+        "cspell": "^8.8.2",
+        "eslint": "^8.56.0",
         "eslint-config-next": "13.5.2",
         "eslint-plugin-import": "^2.29.0",
         "eslint-plugin-no-relative-import-paths": "^1.5.3",
@@ -43,6 +45,8 @@
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-simple-import-sort": "^10.0.0",
         "eslint-plugin-unicorn": "^49.0.0",
-        "eslint-plugin-unused-imports": "^3.0.0"
+        "eslint-plugin-unused-imports": "^3.0.0",
+        "prettier": "^3.2.5",
+        "prettier-plugin-tailwindcss": "^0.5.14"
     }
 }
