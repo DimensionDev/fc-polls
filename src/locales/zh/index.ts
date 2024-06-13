@@ -25,6 +25,7 @@ const locales = {
     'Option _': '选项{0}',
     'Create Poll': '创建投票',
     'Creating...': '创建中...',
+    'Try again': '重试',
 };
 
 export default locales;

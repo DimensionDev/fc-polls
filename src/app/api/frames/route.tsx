@@ -14,7 +14,9 @@ const handleRequest = frames(
         const poll = await getPoll(id, source, profileId);
 
         if (!poll) {
-            throw new Error(t`No poll found via pollId="${id}"`);
+            throw new Error(t`No poll found via pollId="${id}"`, {
+                cause: t`Try again`,
+            });
         }
 
         return createFrameSuccessResponse(poll, queryData);

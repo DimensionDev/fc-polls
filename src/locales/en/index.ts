@@ -25,6 +25,7 @@ const locales = {
     'Option _': 'Option {0}',
     'Create Poll': 'Create Poll',
     'Creating...': 'Creating...',
+    'Try again': 'Try again',
 };
 
 export default locales;
