@@ -24,6 +24,10 @@ export const createFrameErrorResponse = ({ text, noBack = false, queryData, butt
         buttons:
             noBack || !queryData
                 ? []
-                : [<Button key={0} action="post" target={urlcat(`/`, queryData)}>{buttonLabel ?? t`Back to poll`}</Button>],
+                : [
+                      <Button key={0} action="post" target={urlcat(`/`, queryData)}>
+                          {buttonLabel ?? t`Back to poll`}
+                      </Button>,
+                  ],
     };
 };
