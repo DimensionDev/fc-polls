@@ -26,6 +26,7 @@ export enum POLL_CHOICE_TYPE {
 }
 
 export enum LOCALE {
-    EN = 'en',
-    ZH = 'zh',
+    en = 'en',
+    zhHans = 'zh-Hans',
+    zhHant = 'zh-Hant',
 }

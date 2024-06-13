@@ -1,6 +1,7 @@
 import { LOCALE } from '@/constants/enum';
 import { env } from '@/constants/env';
 import { IMAGE_THEME, THEME_CONFIG } from '@/constants/theme';
+import { createFrameTranslator } from '@/helpers/createFrameTranslator';
 import { getPollTimeLeft } from '@/helpers/getPollTimeLeft';
 import { indexToLetter } from '@/helpers/indexToLetter';
 import { PollTheme } from '@/types';
@@ -104,6 +105,7 @@ function VoteResult({ choice, theme }: VoteResultProps) {
 export function PollCard({ poll, theme, locale }: PollCardProps) {
     const { is_end, choice_detail, vote_count } = poll;
     const themeConfig = THEME_CONFIG[theme];
+    const t = createFrameTranslator(locale);
 
     return (
         <div
@@ -148,9 +150,9 @@ export function PollCard({ poll, theme, locale }: PollCardProps) {
                 }}
             >
                 <span>
-                    {vote_count} Votes · {getPollTimeLeft(poll, locale)}
+                    {t`${vote_count} vote${vote_count > 1 ? 's' : ''}`} · {getPollTimeLeft(poll, locale)}
                 </span>
-                <span>via Firefly</span>
+                <span>{t`via Firefly`}</span>
             </div>
         </div>
     );

@@ -26,6 +26,8 @@ const locales = {
     'Create Poll': 'Create Poll',
     'Creating...': 'Creating...',
     'Try again': 'Try again',
+    '_ vote_': '{0} vote',
+    'via Firefly': 'via Firefly',
 };
 
 export default locales;

@@ -1,7 +1,7 @@
 # Open Frames Poll App
 
--   A poll frame app built with [Framesjs](https://framesjs.org/) and [Open Frames](https://github.com/open-frames/standard)
--   Supported Farcaster frame(fc:frame) and Lens frame(of: supported with open frames)
+- A poll frame app built with [Framesjs](https://framesjs.org/) and [Open Frames](https://github.com/open-frames/standard)
+- Supported Farcaster frame(fc:frame) and Lens frame(of: supported with open frames)
 
 ## Type Description
 
@@ -11,8 +11,9 @@ enum IMAGE_THEME {
     Light = 'light',
 }
 enum LOCALE {
-    EN = 'en',
-    ZH = 'zh',
+    en = 'en',
+    zhHans = 'zh-Hans',
+    zhHant = 'zh-Hant',
 }
 enum FRAME_SOURCE {
     Lens = 'lens',
@@ -23,7 +24,7 @@ const QUERY_SHAPE = z.object({
     profileId: z.string().optional(), // profile id
     date: z.string().optional(), // Date.now, when error happened we change this and redirect with no cache
     theme: z.nativeEnum(IMAGE_THEME).optional().default(IMAGE_THEME.Light).catch(IMAGE_THEME.Light), // theme of frame image
-    locale: z.nativeEnum(LOCALE).optional().default(LOCALE.EN).catch(LOCALE.EN), // locale of frame image
+    locale: z.nativeEnum(LOCALE).optional().default(LOCALE.en).catch(LOCALE.en), // locale of frame image
     source: z.nativeEnum(FRAME_SOURCE).default(FRAME_SOURCE.Farcaster), // supported platform
 })
 ```
@@ -32,32 +33,32 @@ const QUERY_SHAPE = z.object({
 
 ### /polls/:pollId
 
--   The entry of poll frame.
--   **parameters**
-    -   path parameters
-        -   pollId: the poll id
-    -   search parameters
-        -   [QUERY_SHAPE](#type-description)
--   **response**: html with frame meta labels
+- The entry of poll frame.
+- **parameters**
+  - path parameters
+    - pollId: the poll id
+  - search parameters
+    - [QUERY_SHAPE](#type-description)
+- **response**: html with frame meta labels
 
 ### /api/frames
 
--   Called by [/polls/:pollId](#pollspollid). You can also call it separately as you need
--   **parameters**
-    -   search parameters
-        -   [QUERY_SHAPE](#type-description)
--   **response**: html with frame meta labels
+- Called by [/polls/:pollId](#pollspollid). You can also call it separately as you need
+- **parameters**
+  - search parameters
+    - [QUERY_SHAPE](#type-description)
+- **response**: html with frame meta labels
 
 ### /api/frames/vote
 
--   Vote api. Called when user select option
--   **parameters**
+- Vote api. Called when user select option
+- **parameters**
 
-    -   search parameters
-        -   [QUERY_SHAPE](#type-description)
-    -   body: Frame Action Shape
+  - search parameters
+    - [QUERY_SHAPE](#type-description)
+  - body: Frame Action Shape
 
-        -   Farcaster:
+    - Farcaster:
 
             ```TypeScript
             const requestBody = {
@@ -82,7 +83,7 @@ const QUERY_SHAPE = z.object({
             }
             ```
 
-        -   Lens:
+    - Lens:
 
             ```TypeScript
             const plainData = {
@@ -109,14 +110,14 @@ const QUERY_SHAPE = z.object({
             }
             ```
 
--   **response**: html with frame meta labels
+- **response**: html with frame meta labels
 
 ### /api/frames/images
 
--   Internal call. _Do not call separately_
--   response: frame image
+- Internal call. _Do not call separately_
+- response: frame image
 
 ## Demo
 
--   [https://firefly.mask.social/](https://firefly.mask.social/)(**Official**)
--   [https://polls.mask.social/](https://polls.mask.social/)
+- [https://firefly.mask.social/](https://firefly.mask.social/)(**Official**)
+- [https://polls.mask.social/](https://polls.mask.social/)

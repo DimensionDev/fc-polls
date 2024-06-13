@@ -15,7 +15,7 @@ type CreateErrorOptions = {
 };
 
 export const createFrameErrorResponse = ({ text, noBack = false, queryData, buttonLabel }: CreateErrorOptions) => {
-    const { theme = IMAGE_THEME.Light, locale = LOCALE.EN } = queryData ?? {};
+    const { theme = IMAGE_THEME.Light, locale = LOCALE.en } = queryData ?? {};
     const themeConfig = THEME_CONFIG[theme];
     const t = createFrameTranslator(locale);
 

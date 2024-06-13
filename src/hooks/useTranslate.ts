@@ -4,7 +4,7 @@ import { LOCALE } from '@/constants/enum';
 import { createFrameTranslator } from '@/helpers/createFrameTranslator';
 
 export const LocaleContext = createContext<{ locale: LOCALE }>({
-    locale: LOCALE.EN,
+    locale: LOCALE.en,
 });
 
 export const useTranslate = () => {
