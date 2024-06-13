@@ -11,9 +11,10 @@ type CreateErrorOptions = {
     text: string;
     queryData: ImageQuery | null;
     noBack?: boolean;
+    buttonLabel?: string;
 };
 
-export const createFrameErrorResponse = ({ text, noBack = false, queryData }: CreateErrorOptions) => {
+export const createFrameErrorResponse = ({ text, noBack = false, queryData, buttonLabel }: CreateErrorOptions) => {
     const { theme = IMAGE_THEME.Light, locale = LOCALE.EN } = queryData ?? {};
     const themeConfig = THEME_CONFIG[theme];
     const t = createFrameTranslator(locale);
@@ -23,6 +24,10 @@ export const createFrameErrorResponse = ({ text, noBack = false, queryData }: Cr
         buttons:
             noBack || !queryData
                 ? []
-                : [<Button key={0} action="post" target={urlcat(`/`, queryData)}>{t`Back to poll`}</Button>],
+                : [
+                      <Button key={0} action="post" target={urlcat(`/`, queryData)}>
+                          {buttonLabel ?? t`Back to poll`}
+                      </Button>,
+                  ],
     };
 };

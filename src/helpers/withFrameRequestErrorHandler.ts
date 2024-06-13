@@ -6,14 +6,22 @@ import { createFrameErrorResponse } from '@/helpers/createFrameErrorResponse';
 
 type FrameRequestHandler = Parameters<typeof frames>[0];
 
-const getErrorMessage = (error: unknown) => {
+const collectDataFromError = (error: unknown) => {
     if (error instanceof ZodError) {
-        return (
-            'InvalidParams: ' +
-            error.issues.map((issue) => `(${issue.code})${issue.path.join('.')}: ${issue.message}`).join('; ')
-        );
+        return {
+            cause: void 0,
+            message:
+                'InvalidParams: ' +
+                error.issues.map((issue) => `(${issue.code})${issue.path.join('.')}: ${issue.message}`).join('; '),
+        };
     }
-    return error instanceof Error ? error.message : `${error}`;
+    if (error instanceof Error) {
+        return {
+            cause: (error.cause as string) ?? void 0,
+            message: error.message,
+        };
+    }
+    return { cause: void 0, message: `${error}` };
 };
 
 export const withFrameRequestErrorHandler = () => {
@@ -23,9 +31,11 @@ export const withFrameRequestErrorHandler = () => {
                 return await handler(ctx);
             } catch (error) {
                 const { data, success } = IMAGE_QUERY_SCHEMA.safeParse(ctx.searchParams);
+                const { message, cause } = collectDataFromError(error);
                 return createFrameErrorResponse({
-                    text: getErrorMessage(error),
+                    text: message,
                     queryData: !success ? null : { ...data, date: `${Date.now()}` },
+                    buttonLabel: cause,
                 });
             }
         };
