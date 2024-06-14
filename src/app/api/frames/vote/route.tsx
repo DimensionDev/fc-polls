@@ -1,5 +1,6 @@
 import { FrameHandler, frames } from '@/config/frames';
-import { FRAME_SOURCE } from '@/constants/enum';
+import { PER_USER_VOTE_LIMIT } from '@/constants';
+import { FRAME_SOURCE, POLL_CHOICE_TYPE } from '@/constants/enum';
 import { IMAGE_QUERY_SCHEMA } from '@/constants/zod';
 import { compose } from '@/helpers/compose';
 import { createFrameSuccessResponse } from '@/helpers/createFrameSuccessResponse';
@@ -27,23 +28,29 @@ export const POST = frames(
 
         const body = await ctx.request.json();
 
-        const voteResult = await vote(
-            {
-                poll_id: pollId,
-                platform: source,
-                platform_id: `${isFarcaster ? requesterFid : profileId}`,
-                choices: [poll.choice_detail[buttonIndex - 1].id],
-                lens_token: isFarcaster ? '' : body.untrustedData.identityToken,
-                farcaster_signature: isFarcaster ? body.trustedData.messageBytes : '',
-                wallet_address: requesterCustodyAddress,
-                original_message: body.untrustedData,
-                signature_message: body.trustedData.messageBytes,
-            },
-            locale,
-        );
+        const currentChoice = poll.choice_detail[buttonIndex - 1]
+        const votedLen = poll.choice_detail.filter((choice) => choice.is_select).length;
+        const maxVoteCount = poll.type === POLL_CHOICE_TYPE.Multiple ? poll.multiple_count : PER_USER_VOTE_LIMIT;
 
-        if (voteResult?.is_success) {
-            poll.choice_detail = voteResult.choice_detail;
+        if (!currentChoice.is_select && votedLen < maxVoteCount) {
+            const voteResult = await vote(
+                {
+                    poll_id: pollId,
+                    platform: source,
+                    platform_id: `${isFarcaster ? requesterFid : profileId}`,
+                    choices: [currentChoice.id],
+                    lens_token: isFarcaster ? '' : body.untrustedData.identityToken,
+                    farcaster_signature: isFarcaster ? body.trustedData.messageBytes : '',
+                    wallet_address: requesterCustodyAddress,
+                    original_message: body.untrustedData,
+                    signature_message: body.trustedData.messageBytes,
+                },
+                locale,
+            );
+
+            if (voteResult?.is_success) {
+                poll.choice_detail = voteResult.choice_detail;
+            }
         }
 
         return createFrameSuccessResponse(poll, queryData);
