@@ -28,7 +28,7 @@ export const POST = frames(
 
         const body = await ctx.request.json();
 
-        const currentChoice = poll.choice_detail[buttonIndex - 1]
+        const currentChoice = poll.choice_detail[buttonIndex - 1];
         const votedLen = poll.choice_detail.filter((choice) => choice.is_select).length;
         const maxVoteCount = poll.type === POLL_CHOICE_TYPE.Multiple ? poll.multiple_count : PER_USER_VOTE_LIMIT;
 

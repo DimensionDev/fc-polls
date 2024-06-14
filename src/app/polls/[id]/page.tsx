@@ -28,7 +28,5 @@ export async function generateMetadata({ params, searchParams }: MetadataProps):
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-    return (
-        <FrameTips />
-    );
+    return <FrameTips />;
 }

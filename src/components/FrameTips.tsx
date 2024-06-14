@@ -7,10 +7,9 @@ export function FrameTips() {
             <h1>Please use the app supports Farcaster or Lens to view this page.</h1>
             <h1>
                 Or you can try this feature on our website.
-                <a
-                    className="text-blue-500 underline"
-                    href="https://firefly.mask.social/"
-                >https://firefly.mask.social/</a>
+                <a className="text-blue-500 underline" href="https://firefly.mask.social/">
+                    https://firefly.mask.social/
+                </a>
             </h1>
         </div>
     );
