@@ -1,3 +1,4 @@
+import { IMAGE_ZOOM_SCALE } from '@/constants';
 import { LOCALE } from '@/constants/enum';
 import { env } from '@/constants/env';
 import { IMAGE_THEME, THEME_CONFIG } from '@/constants/theme';
@@ -30,11 +31,11 @@ function VoteButton({ text, theme }: VoteButtonProps) {
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: theme.optionTextColor,
-                height: 40,
+                height: 40 * IMAGE_ZOOM_SCALE,
                 width: '100%',
-                borderRadius: 10,
-                border: `1px solid ${theme.optionTextColor}`,
-                fontSize: 16,
+                borderRadius: 10 * IMAGE_ZOOM_SCALE,
+                border: `${1 * IMAGE_ZOOM_SCALE}px solid ${theme.optionTextColor}`,
+                fontSize: 16 * IMAGE_ZOOM_SCALE,
                 fontWeight: 'bold',
             }}
         >
@@ -49,16 +50,16 @@ function VoteResult({ choice, theme }: VoteResultProps) {
             style={{
                 position: 'relative',
                 display: 'flex',
-                height: 40,
+                height: 40 * IMAGE_ZOOM_SCALE,
             }}
         >
             <div
                 style={{
                     display: 'flex',
-                    width: choice.percent ? `${choice.percent}%` : '10px',
+                    width: choice.percent ? `${choice.percent}%` : `${10 * IMAGE_ZOOM_SCALE}px`,
                     position: 'absolute',
                     height: '100%',
-                    borderRadius: 10,
+                    borderRadius: 10 * IMAGE_ZOOM_SCALE,
                     backgroundColor: choice.is_select ? theme.optionSelectedBgColor : theme.optionBgColor,
                 }}
             />
@@ -68,10 +69,10 @@ function VoteResult({ choice, theme }: VoteResultProps) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    paddingLeft: 20,
+                    paddingLeft: 20 * IMAGE_ZOOM_SCALE,
                     height: '100%',
                     width: '100%',
-                    fontSize: 16,
+                    fontSize: 16 * IMAGE_ZOOM_SCALE,
                     fontWeight: 'bold',
                     color: choice.is_select ? theme.optionSelectedTextColor : theme.optionTextColor,
                 }}
@@ -80,7 +81,7 @@ function VoteResult({ choice, theme }: VoteResultProps) {
                     style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: 8,
+                        gap: 8 * IMAGE_ZOOM_SCALE,
                     }}
                 >
                     <span style={{ display: 'flex' }}>{choice.name}</span>
@@ -89,8 +90,8 @@ function VoteResult({ choice, theme }: VoteResultProps) {
                             src={`${env.external.NEXT_PUBLIC_HOST}/tick-circle.png`}
                             style={{
                                 display: 'flex',
-                                width: 20,
-                                height: 20,
+                                width: 20 * IMAGE_ZOOM_SCALE,
+                                height: 20 * IMAGE_ZOOM_SCALE,
                             }}
                         />
                     ) : null}
@@ -116,7 +117,7 @@ export function PollCard({ poll, theme, locale }: PollCardProps) {
                 height: '100%',
                 backgroundColor: themeConfig.cardBgColor,
                 lineHeight: 1.2,
-                fontSize: 24,
+                fontSize: 24 * IMAGE_ZOOM_SCALE,
             }}
         >
             <div
@@ -124,8 +125,8 @@ export function PollCard({ poll, theme, locale }: PollCardProps) {
                     display: 'flex',
                     flexDirection: 'column',
                     width: '100%',
-                    gap: 12,
-                    padding: 20,
+                    gap: 12 * IMAGE_ZOOM_SCALE,
+                    padding: 20 * IMAGE_ZOOM_SCALE,
                 }}
             >
                 {choice_detail.map((choice, index) =>
@@ -140,11 +141,11 @@ export function PollCard({ poll, theme, locale }: PollCardProps) {
                 style={{
                     display: 'flex',
                     justifyContent: 'space-between',
+                    marginTop: 40 * IMAGE_ZOOM_SCALE,
+                    padding: 20 * IMAGE_ZOOM_SCALE,
                     width: '100%',
                     color: themeConfig.secondTextColor,
-                    fontSize: 12,
-                    padding: 20,
-                    gap: 20,
+                    fontSize: 12 * IMAGE_ZOOM_SCALE,
                 }}
             >
                 <span>

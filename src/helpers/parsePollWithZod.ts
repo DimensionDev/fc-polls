@@ -5,7 +5,7 @@ import { LOCALE, POLL_CHOICE_TYPE } from '@/constants/enum';
 import { createFrameTranslator } from '@/helpers/createFrameTranslator';
 import { Poll } from '@/types/api';
 
-export const parsePollWithZod = (poll: Poll | null, locale: LOCALE, currentVoteIndex: number) => {
+export const parsePollWithZod = (poll: Poll | null, locale: LOCALE, currentVoteIndex?: number) => {
     const t = createFrameTranslator(locale);
     const schema = z
         .object(
@@ -29,9 +29,11 @@ export const parsePollWithZod = (poll: Poll | null, locale: LOCALE, currentVoteI
             },
             {
                 required_error: t`No poll found`,
+                invalid_type_error: t`No poll found`,
             },
         )
         .transform((v, ctx) => {
+            if (currentVoteIndex === undefined) return v;
             if (v.is_end) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,

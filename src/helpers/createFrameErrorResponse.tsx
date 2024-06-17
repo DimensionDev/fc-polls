@@ -5,7 +5,7 @@ import { ErrorHandler } from '@/components/ErrorHandler';
 import { LOCALE } from '@/constants/enum';
 import { IMAGE_THEME, THEME_CONFIG } from '@/constants/theme';
 import { ImageQuery } from '@/constants/zod';
-import { createFrameTranslator } from '@/helpers/createFrameTranslator';
+import { getButtonLabelFromErrorMessage } from '@/helpers/getButtonLabelFromErrorMessage';
 
 type CreateErrorOptions = {
     text: string;
@@ -17,7 +17,6 @@ type CreateErrorOptions = {
 export const createFrameErrorResponse = ({ text, noBack = false, queryData, buttonLabel }: CreateErrorOptions) => {
     const { theme = IMAGE_THEME.Light, locale = LOCALE.EN } = queryData ?? {};
     const themeConfig = THEME_CONFIG[theme];
-    const t = createFrameTranslator(locale);
 
     return {
         image: <ErrorHandler text={text} theme={themeConfig} />,
@@ -26,7 +25,7 @@ export const createFrameErrorResponse = ({ text, noBack = false, queryData, butt
                 ? []
                 : [
                       <Button key={0} action="post" target={urlcat(`/`, queryData)}>
-                          {buttonLabel ?? t`Back to poll`}
+                          {buttonLabel ?? getButtonLabelFromErrorMessage(text, locale)}
                       </Button>,
                   ],
     };
