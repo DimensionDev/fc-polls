@@ -1,5 +1,5 @@
-import { LOCALE } from "@/constants/enum";
-import { createFrameTranslator } from "@/helpers/createFrameTranslator";
+import { LOCALE } from '@/constants/enum';
+import { createFrameTranslator } from '@/helpers/createFrameTranslator';
 
 export const getButtonLabelFromErrorMessage = (message: string, locale: LOCALE) => {
     const t = createFrameTranslator(locale);
