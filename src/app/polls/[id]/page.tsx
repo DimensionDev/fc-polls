@@ -2,17 +2,17 @@ import { fetchMetadata } from 'frames.js/next';
 import { Metadata } from 'next';
 import urlcat from 'urlcat';
 
-import { FrameTips } from '@/components/FrameTips';
+import { RedirectProfile } from '@/components/RedirectProfile';
 import { COMMON_APP_TITLE } from '@/constants';
 import { env } from '@/constants/env';
 import { IMAGE_QUERY_SCHEMA } from '@/constants/zod';
 
-interface MetadataProps {
+interface PageProps {
     params: { id: string };
     searchParams: { [key: string]: string };
 }
 
-export async function generateMetadata({ params, searchParams }: MetadataProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
     const queryData = IMAGE_QUERY_SCHEMA.parse({
         ...searchParams,
         id: params.id,
@@ -27,6 +27,6 @@ export async function generateMetadata({ params, searchParams }: MetadataProps):
     };
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
-    return <FrameTips />;
+export default async function Page({ searchParams }: PageProps) {
+    return <RedirectProfile profileUrl={searchParams.author} />;
 }
