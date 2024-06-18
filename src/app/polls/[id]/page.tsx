@@ -28,6 +28,5 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
 }
 
 export default async function Page({ searchParams }: PageProps) {
-
     return <RedirectProfile profileUrl={searchParams.author} />;
 }
