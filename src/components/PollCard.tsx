@@ -87,6 +87,7 @@ function VoteResult({ choice, theme }: VoteResultProps) {
                     <span style={{ display: 'flex' }}>{choice.name}</span>
                     {choice.is_select ? (
                         <img
+                            alt={choice.name}
                             src={`${env.external.NEXT_PUBLIC_HOST}/tick-circle.png`}
                             style={{
                                 display: 'flex',
