@@ -11,8 +11,9 @@ enum IMAGE_THEME {
     Light = 'light',
 }
 enum LOCALE {
-    EN = 'en',
-    ZH = 'zh',
+    en = 'en',
+    zhHans = 'zh-Hans',
+    zhHant = 'zh-Hant',
 }
 enum FRAME_SOURCE {
     Lens = 'lens',
@@ -23,7 +24,7 @@ const QUERY_SHAPE = z.object({
     profileId: z.string().optional(), // profile id
     date: z.string().optional(), // Date.now, when error happened we change this and redirect with no cache
     theme: z.nativeEnum(IMAGE_THEME).optional().default(IMAGE_THEME.Light).catch(IMAGE_THEME.Light), // theme of frame image
-    locale: z.nativeEnum(LOCALE).optional().default(LOCALE.EN).catch(LOCALE.EN), // locale of frame image
+    locale: z.nativeEnum(LOCALE).optional().default(LOCALE.en).catch(LOCALE.en), // locale of frame image
     source: z.nativeEnum(FRAME_SOURCE).default(FRAME_SOURCE.Farcaster), // supported platform
 })
 ```
@@ -59,55 +60,55 @@ const QUERY_SHAPE = z.object({
 
         -   Farcaster:
 
-            ```TypeScript
-            const requestBody = {
-                untrustedData: {
-                    fid: 1, // farcaster profile id
-                    url: frame.url, // frame url
-                    messageHash: messageDataHash,
-                    timestamp: messageData.timestamp,
-                    network: messageData.network,
-                    buttonIndex: index,
-                    inputText: input,
-                    state: additional?.state,
-                    transactionId: additional?.transactionId,
-                    castId: {
-                        fid: messageData.fid,
-                        hash: postId, // such as postId
-                    }
-                },
-                trustedData: {
-                    messageBytes: signature, // Signed by current profile
-                }
-            }
-            ```
+                  ```TypeScript
+                  const requestBody = {
+                      untrustedData: {
+                          fid: 1, // farcaster profile id
+                          url: frame.url, // frame url
+                          messageHash: messageDataHash,
+                          timestamp: messageData.timestamp,
+                          network: messageData.network,
+                          buttonIndex: index,
+                          inputText: input,
+                          state: additional?.state,
+                          transactionId: additional?.transactionId,
+                          castId: {
+                              fid: messageData.fid,
+                              hash: postId, // such as postId
+                          }
+                      },
+                      trustedData: {
+                          messageBytes: signature, // Signed by current profile
+                      }
+                  }
+                  ```
 
         -   Lens:
 
-            ```TypeScript
-            const plainData = {
-                actionResponse: '0x',
-                buttonIndex: 1,
-                inputText: '',
-                profileId: '0x',
-                pubId: '0x-0x', // such as postId
-                // The EIP-721 spec version, must be 1.0.0
-                specVersion: '1.0.0',
-                state: '',
-                url: 'https://your-frame-url.com',
-            };
-            const requestBody = {
-                clientProtocol: 'lens@1.0.0',
-                untrustedData: {
-                    ...plainData,
-                    deadline: Date.now() + (1000 * 60 * 10), // timestamp: such as 10 minutes from now
-                    identityToken: '', // use this to validate lens profile
-                },
-                trustedData: {
-                    messageBytes: signature, // Signed by current profile with plainData
-                },
-            }
-            ```
+                  ```TypeScript
+                  const plainData = {
+                      actionResponse: '0x',
+                      buttonIndex: 1,
+                      inputText: '',
+                      profileId: '0x',
+                      pubId: '0x-0x', // such as postId
+                      // The EIP-721 spec version, must be 1.0.0
+                      specVersion: '1.0.0',
+                      state: '',
+                      url: 'https://your-frame-url.com',
+                  };
+                  const requestBody = {
+                      clientProtocol: 'lens@1.0.0',
+                      untrustedData: {
+                          ...plainData,
+                          deadline: Date.now() + (1000 * 60 * 10), // timestamp: such as 10 minutes from now
+                          identityToken: '', // use this to validate lens profile
+                      },
+                      trustedData: {
+                          messageBytes: signature, // Signed by current profile with plainData
+                      },
+                  }
+                  ```
 
 -   **response**: html with frame meta labels
 

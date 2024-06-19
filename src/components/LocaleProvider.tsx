@@ -6,7 +6,7 @@ import { LOCALE } from '@/constants/enum';
 import { LocaleContext } from '@/hooks/useTranslate';
 
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
-    const initialValue = useMemo(() => ({ locale: LOCALE.ZH }), []);
+    const initialValue = useMemo(() => ({ locale: LOCALE.en }), []);
 
     return <LocaleContext.Provider value={initialValue}>{children}</LocaleContext.Provider>;
 }

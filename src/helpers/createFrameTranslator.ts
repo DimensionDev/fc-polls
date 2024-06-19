@@ -1,5 +1,5 @@
-import { locales } from '@/config/frameLocales';
 import { LOCALE } from '@/constants/enum';
+import { locales } from '@/locales/index';
 
 const DYNAMIC_CHUNK = /\{([^{}]+)\}/g;
 
@@ -8,7 +8,7 @@ const chunksToKey = (chunks: TemplateStringsArray) => {
 };
 
 export const createFrameTranslator = (locale: LOCALE) => {
-    const currentLocale = locales[locale] ?? locales[LOCALE.EN];
+    const currentLocale = locales[locale] ?? locales[LOCALE.en];
     return (chunks: TemplateStringsArray, ...params: any[]) => {
         const key = chunksToKey(chunks);
         if (!currentLocale[key]) {
