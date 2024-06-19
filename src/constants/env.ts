@@ -10,6 +10,7 @@ const ExternalEnvSchema = z.object({
     NEXT_PUBLIC_HOST: z.string().optional().default(''),
     NEXT_PUBLIC_HUB_URL: z.string().optional().default(''),
     NEXT_PUBLIC_HUB_API_KEY: z.string().optional(),
+    NEXT_PUBLIC_FIREFLY_WEB_ROOT: z.string().optional().default('https://firefly.mask.social'),
 });
 
 export const env = {
@@ -25,5 +26,6 @@ export const env = {
         NEXT_PUBLIC_HOST: process.env.NEXT_PUBLIC_HOST,
         NEXT_PUBLIC_HUB_URL: process.env.NEXT_PUBLIC_HUB_URL,
         NEXT_PUBLIC_HUB_API_KEY: process.env.NEXT_PUBLIC_HUB_API_KEY,
+        NEXT_PUBLIC_FIREFLY_WEB_ROOT: process.env.NEXT_PUBLIC_FIREFLY_WEB_ROOT,
     }),
 };
