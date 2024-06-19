@@ -45,8 +45,6 @@ export async function getLensFrameMessage(
 
     return {
         ...typedData.value,
-        isValid:
-            response === FrameVerifySignatureResult.Verified ||
-            response === FrameVerifySignatureResult.SignerAddressCannotUseProfile,
+        isValid: response === FrameVerifySignatureResult.Verified,
     };
 }

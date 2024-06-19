@@ -10,9 +10,7 @@ const collectDataFromError = (error: unknown) => {
     if (error instanceof ZodError) {
         return {
             cause: void 0,
-            message:
-                'InvalidParams: ' +
-                error.issues.map((issue) => `(${issue.code})${issue.path.join('.')}: ${issue.message}`).join('; '),
+            message: error.issues.map((issue) => issue.message).join('; '),
         };
     }
     if (error instanceof Error) {

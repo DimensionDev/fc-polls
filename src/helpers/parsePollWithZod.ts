@@ -5,7 +5,7 @@ import { LOCALE, POLL_CHOICE_TYPE } from '@/constants/enum';
 import { createFrameTranslator } from '@/helpers/createFrameTranslator';
 import { Poll } from '@/types/api';
 
-export const parsePollWithZod = (poll: Poll | null, locale: LOCALE, currentVoteIndex: number) => {
+export const parsePollWithZod = (poll: Poll | null, locale: LOCALE, currentVoteIndex?: number) => {
     const t = createFrameTranslator(locale);
     const schema = z
         .object(
@@ -23,28 +23,21 @@ export const parsePollWithZod = (poll: Poll | null, locale: LOCALE, currentVoteI
                         name: z.string(),
                         count: z.number().int().min(0),
                         is_select: z.boolean(),
-                        percent: z.number().int().min(0).max(100),
+                        percent: z.number().min(0).catch(0),
                     }),
                 ),
             },
             {
                 required_error: t`No poll found`,
+                invalid_type_error: t`No poll found`,
             },
         )
         .transform((v, ctx) => {
+            if (currentVoteIndex === undefined) return v;
             if (v.is_end) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
                     message: t`Poll is expired`,
-                });
-                return z.NEVER;
-            }
-            const votedLen = v.choice_detail.filter((choice) => choice.is_select).length;
-            const maxVoteCount = v.type === POLL_CHOICE_TYPE.Multiple ? v.multiple_count : PER_USER_VOTE_LIMIT;
-            if (votedLen >= maxVoteCount) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.custom,
-                    message: t`You have voted ${votedLen} time${votedLen > 1 ? 's' : ''}, cannot vote again`,
                 });
                 return z.NEVER;
             }
@@ -53,13 +46,6 @@ export const parsePollWithZod = (poll: Poll | null, locale: LOCALE, currentVoteI
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
                     message: t`Invalid vote choice`,
-                });
-                return z.NEVER;
-            }
-            if (currentChoice.is_select) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.custom,
-                    message: t`You have already voted for this choice`,
                 });
                 return z.NEVER;
             }

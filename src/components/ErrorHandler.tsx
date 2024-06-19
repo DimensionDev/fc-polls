@@ -1,3 +1,4 @@
+import { IMAGE_ZOOM_SCALE } from '@/constants';
 import { PollTheme } from '@/types';
 
 interface ErrorHandlerProps {
@@ -11,14 +12,14 @@ export function ErrorHandler({ text, theme }: ErrorHandlerProps) {
             style={{
                 display: 'flex',
                 alignItems: 'center',
-                padding: 40,
+                padding: 40 * IMAGE_ZOOM_SCALE,
                 backgroundColor: theme.cardBgColor,
             }}
         >
             <h1
                 style={{
                     textAlign: 'center',
-                    fontSize: '18px',
+                    fontSize: 18 * IMAGE_ZOOM_SCALE,
                     color: theme.optionTextColor,
                 }}
             >
