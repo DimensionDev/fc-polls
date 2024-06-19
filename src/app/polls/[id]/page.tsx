@@ -17,7 +17,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
         ...searchParams,
         id: params.id,
     });
-    const ogImage = `${env.external.NEXT_PUBLIC_HOST}/android-chrome-384x384.png`;
+    const ogImage = `${env.external.NEXT_PUBLIC_HOST}/firefly.png`;
     const metadata = await fetchMetadata(new URL(urlcat('/api/frames', queryData), env.external.NEXT_PUBLIC_HOST));
 
     if (metadata) {
