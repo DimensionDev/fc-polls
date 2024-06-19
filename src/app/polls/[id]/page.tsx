@@ -26,6 +26,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
         openGraph: {
             title: COMMON_APP_TITLE,
             description: 'Everything app for Web3 natives',
+            images: [`${env.external.NEXT_PUBLIC_HOST}/android-chrome-384x384.png`],
         },
         metadataBase: new URL(env.external.NEXT_PUBLIC_HOST),
     };
