@@ -11,7 +11,7 @@ export const MAX_CHARS_POLL_OPTION = 25;
 
 export const PER_USER_VOTE_LIMIT = 1;
 
-export const COMMON_APP_TITLE = 'Polls';
+export const COMMON_APP_TITLE = 'Firefly';
 
 export const IS_PRODUCTION = env.external.NEXT_PUBLIC_VERCEL_ENV === VERCEL_NEV.Production;
 export const IS_DEVELOPMENT = env.external.NEXT_PUBLIC_VERCEL_ENV === VERCEL_NEV.Development;
