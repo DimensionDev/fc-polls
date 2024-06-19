@@ -98,7 +98,7 @@ function VoteResult({ choice, theme }: VoteResultProps) {
                         />
                     ) : null}
                 </span>
-                <span style={{ display: 'flex' }}>{choice.percent}%</span>
+                <span style={{ display: 'flex', color: theme.optionTextColor }}>{choice.percent}%</span>
             </div>
         </div>
     );
