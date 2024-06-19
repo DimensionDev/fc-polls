@@ -23,6 +23,10 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
         other: {
             ...(await fetchMetadata(new URL(urlcat('/api/frames', queryData), env.external.NEXT_PUBLIC_HOST))),
         },
+        openGraph: {
+            title: COMMON_APP_TITLE,
+            description: 'Everything app for Web3 natives',
+        },
         metadataBase: new URL(env.external.NEXT_PUBLIC_HOST),
     };
 }

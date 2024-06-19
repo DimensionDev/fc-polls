@@ -16,7 +16,8 @@
         "public/**",
         "src/assets/**",
         "src/locales/**",
-        "LICENSE"
+        "LICENSE",
+        "README.md"
     ],
     "overrides": []
 }
