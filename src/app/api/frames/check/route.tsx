@@ -16,7 +16,7 @@ export const POST = frames(
         const {
             profileId: pId,
             requesterFid,
-            source
+            source,
         } = parseFrameCtxZod({ ...ctx.message, source: ctx.clientProtocol?.id }, locale);
         const isFarcaster = source === FRAME_SOURCE.Farcaster;
         const profileId = isFarcaster ? `${requesterFid}` : pId;

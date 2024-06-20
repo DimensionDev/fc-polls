@@ -15,7 +15,7 @@ export const parseFrameCtxZod = (ctx: unknown, locale: LOCALE) => {
             requesterCustodyAddress: z.string().optional().default(''),
             source: z.nativeEnum(FRAME_SOURCE, {
                 message: t`Not supported frame client protocol`,
-            })
+            }),
         })
         .transform((v, ctx) => {
             if (!v.isValid) {

@@ -32,7 +32,7 @@ const locales = {
     'Vote Now': 'Vote Now',
     'Go to Firefly': 'Go to Firefly',
     'Not supported frame client protocol': 'Not supported frame client protocol',
-    'Refresh': 'Refresh',
+    Refresh: 'Refresh',
 };
 
 export default locales;

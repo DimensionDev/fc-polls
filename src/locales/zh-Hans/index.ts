@@ -32,7 +32,7 @@ const locales = {
     'Vote Now': '立即投票',
     'Go to Firefly': '前往Firefly',
     'Not supported frame client protocol': '不支持的frame客户端协议',
-    'Refresh': '刷新',
+    Refresh: '刷新',
 };
 
 export default locales;
