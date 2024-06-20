@@ -28,6 +28,7 @@ const locales = {
     'Try again': '重试',
     '_ vote_': '{0} 票',
     'via Firefly': '来自Firefly',
+    'Final results': '最终结果',
 };
 
 export default locales;
