@@ -9,7 +9,7 @@ export const getPollTimeLeft = (poll: Poll, locale: LOCALE) => {
     const timeLeft = end_time * 1000 - now;
 
     if (is_end || timeLeft <= 0) {
-        return t`Expired`;
+        return t`Final results`;
     }
 
     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
