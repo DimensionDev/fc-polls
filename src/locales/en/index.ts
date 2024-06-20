@@ -26,9 +26,13 @@ const locales = {
     'Create Poll': 'Create Poll',
     'Creating...': 'Creating...',
     'Try again': 'Try again',
-    '_ vote_': '{0} vote',
+    '_ vote_': '{0} vote{1}',
     'via Firefly': 'via Firefly',
     'Final results': 'Final results',
+    'Vote Now': 'Vote Now',
+    'Go to Firefly': 'Go to Firefly',
+    'Not supported frame client protocol': 'Not supported frame client protocol',
+    'Refresh': 'Refresh',
 };
 
 export default locales;

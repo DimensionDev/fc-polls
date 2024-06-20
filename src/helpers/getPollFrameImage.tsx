@@ -7,6 +7,6 @@ interface Parameters {
     queryData: ImageQuery;
 }
 
-export const getPollFrameImage = ({ poll, queryData: { theme, locale } }: Parameters) => {
-    return <PollCard poll={poll} theme={theme} locale={locale} />;
+export const getPollFrameImage = ({ poll, queryData: { theme, locale, profileId } }: Parameters) => {
+    return <PollCard poll={poll} theme={theme} locale={locale} profileId={profileId} />;
 };

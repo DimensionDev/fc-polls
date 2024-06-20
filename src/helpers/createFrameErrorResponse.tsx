@@ -24,7 +24,7 @@ export const createFrameErrorResponse = ({ text, noBack = false, queryData, butt
             noBack || !queryData
                 ? []
                 : [
-                      <Button key={0} action="post" target={urlcat(`/`, queryData)}>
+                      <Button key={0} action="post" target={urlcat(`/check`, queryData)}>
                           {buttonLabel ?? getButtonLabelFromErrorMessage(text, locale)}
                       </Button>,
                   ],

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { POLL_OPTIONS_MAX_COUNT } from '@/constants';
-import { LOCALE } from '@/constants/enum';
+import { FRAME_SOURCE, LOCALE } from '@/constants/enum';
 import { createFrameTranslator } from '@/helpers/createFrameTranslator';
 
 export const parseFrameCtxZod = (ctx: unknown, locale: LOCALE) => {
@@ -13,6 +13,9 @@ export const parseFrameCtxZod = (ctx: unknown, locale: LOCALE) => {
             buttonIndex: z.number().int().positive(),
             requesterFid: z.number().int().positive().optional(),
             requesterCustodyAddress: z.string().optional().default(''),
+            source: z.nativeEnum(FRAME_SOURCE, {
+                message: t`Not supported frame client protocol`,
+            })
         })
         .transform((v, ctx) => {
             if (!v.isValid) {

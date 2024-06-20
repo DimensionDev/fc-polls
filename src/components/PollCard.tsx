@@ -12,6 +12,7 @@ export interface PollCardProps {
     poll: Poll;
     theme: IMAGE_THEME;
     locale: LOCALE;
+    profileId?: string;
 }
 
 interface VoteButtonProps {
@@ -104,7 +105,7 @@ function VoteResult({ choice, theme }: VoteResultProps) {
     );
 }
 
-export function PollCard({ poll, theme, locale }: PollCardProps) {
+export function PollCard({ poll, theme, locale, profileId }: PollCardProps) {
     const { is_end, choice_detail, vote_count } = poll;
     const themeConfig = THEME_CONFIG[theme];
     const t = createFrameTranslator(locale);
@@ -133,7 +134,7 @@ export function PollCard({ poll, theme, locale }: PollCardProps) {
                 }}
             >
                 {choice_detail.map((choice, index) =>
-                    is_end || choice_detail.some((choice) => choice.is_select) ? (
+                    is_end || !profileId || choice_detail.some((choice) => choice.is_select) ? (
                         <VoteResult key={index} choice={choice} theme={themeConfig} />
                     ) : (
                         <VoteButton key={index} theme={themeConfig} text={`${indexToLetter(index)}. ${choice.name}`} />
