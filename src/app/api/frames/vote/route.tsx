@@ -13,14 +13,15 @@ import { vote } from '@/services/vote';
 export const POST = frames(
     compose<FrameHandler>(withFrameRequestErrorHandler(), async (ctx) => {
         const queryData = IMAGE_QUERY_SCHEMA.parse(ctx.searchParams);
-        const { id: pollId, locale, source } = queryData;
+        const { id: pollId, locale } = queryData;
 
         const {
             profileId: pId,
             buttonIndex,
             requesterFid,
             requesterCustodyAddress,
-        } = parseFrameCtxZod(ctx.message, locale);
+            source,
+        } = parseFrameCtxZod({ ...ctx.message, source: ctx.clientProtocol?.id }, locale);
         const isFarcaster = source === FRAME_SOURCE.Farcaster;
         const profileId = isFarcaster ? `${requesterFid}` : pId;
 
@@ -50,9 +51,11 @@ export const POST = frames(
 
             if (voteResult?.is_success) {
                 poll.choice_detail = voteResult.choice_detail;
+                // TODO: the interface should return vote count directly
+                poll.vote_count = poll.choice_detail.reduce((acc, choice) => acc + choice.count, 0);
             }
         }
 
-        return createFrameSuccessResponse(poll, queryData);
+        return createFrameSuccessResponse(poll, { ...queryData, profileId, source });
     }),
 );
