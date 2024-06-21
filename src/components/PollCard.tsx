@@ -135,7 +135,7 @@ export function PollCard({ poll, theme, locale, profileId }: PollCardProps) {
                 }}
             >
                 {choice_detail.map((choice, index) =>
-                    (is_end || choice_detail.some((choice) => choice.is_select)) && profileId ? (
+                    is_end || choice_detail.some((choice) => choice.is_select) ? (
                         <VoteResult key={index} choice={choice} theme={themeConfig} />
                     ) : (
                         <VoteButton key={index} theme={themeConfig} text={`${indexToLetter(index)}. ${choice.name}`} />
