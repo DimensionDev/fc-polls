@@ -88,6 +88,7 @@ function VoteResult({ choice, theme }: VoteResultProps) {
                 >
                     <span style={{ display: 'flex' }}>{choice.name}</span>
                     {choice.is_select ? (
+                        // eslint-disable-next-line @next/next/no-img-element
                         <img
                             alt={choice.name}
                             src={`${env.external.NEXT_PUBLIC_HOST}/tick-circle.png`}
