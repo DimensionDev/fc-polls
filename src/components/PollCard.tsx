@@ -155,7 +155,9 @@ export function PollCard({ poll, theme, locale, profileId }: PollCardProps) {
             >
                 <span>
                     {profileId ? (
-                        <span>{t`${vote_count} vote${vote_count !== 1 ? 's' : ''}`} · {getPollTimeLeft(poll, locale)}</span>
+                        <span>
+                            {t`${vote_count} vote${vote_count !== 1 ? 's' : ''}`} · {getPollTimeLeft(poll, locale)}
+                        </span>
                     ) : null}
                 </span>
                 <span>{t`via Firefly`}</span>
