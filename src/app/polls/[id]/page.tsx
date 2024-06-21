@@ -23,6 +23,9 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
     if (metadata) {
         // update this to support hey.xyz
         metadata['og:image'] = ogImage;
+        // try to disable cache
+        metadata['of:refresh_period'] = '0';
+        metadata['fc:frame:refresh_period'] = '0';
     }
 
     return {

@@ -7,5 +7,10 @@ export const createFrameSuccessResponse = (poll: Poll, queryData: ImageQuery) =>
     return {
         image: getPollFrameImage({ poll, queryData }),
         buttons: getPollFrameButtons({ poll, queryData }),
+        imageOptions: {
+            headers: {
+                'Cache-Control': 'public, max-age=0',
+            },
+        },
     };
 };
