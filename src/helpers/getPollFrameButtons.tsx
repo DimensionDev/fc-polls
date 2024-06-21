@@ -14,6 +14,13 @@ interface Parameters {
     queryData: ImageQuery;
 }
 
+const getFireflyLink = (subPath?: string) => {
+    if (subPath?.startsWith('/profile/')) {
+        return urlcat(FIREFLY_WEB_ROOT, subPath);
+    }
+    return FIREFLY_WEB_ROOT;
+};
+
 export const getPollFrameButtons = ({ poll, queryData }: Parameters) => {
     const postTarget = getPollFramePostUrl(queryData);
     const t = createFrameTranslator(queryData.locale);
@@ -21,7 +28,7 @@ export const getPollFrameButtons = ({ poll, queryData }: Parameters) => {
     const maxVoteCount = poll.type === POLL_CHOICE_TYPE.Multiple ? poll.multiple_count : PER_USER_VOTE_LIMIT;
 
     const getFireflyLinkButton = () => (
-        <Button key="redirect" action="link" target={FIREFLY_WEB_ROOT}>
+        <Button key="redirect" action="link" target={getFireflyLink(queryData.author)}>
             {t`Go to Firefly`}
         </Button>
     );
