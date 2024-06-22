@@ -26,7 +26,7 @@ const locales = {
     'Create Poll': 'Create Poll',
     'Creating...': 'Creating...',
     'Try again': 'Try again',
-    '_ vote_': '{0} vote{1}',
+    '_ vote_': '{0} Vote{1}',
     'via Firefly': 'via Firefly',
     'Final results': 'Final results',
     'Vote Now': 'Vote Now',

@@ -26,7 +26,7 @@ const locales = {
     'Create Poll': '創建投票',
     'Creating...': '創建中...',
     'Try again': '重試',
-    '_ vote_': '{0} 票',
+    '_ vote_': '{0} 次投票',
     'via Firefly': '來自Firefly',
     'Final results': '最終結果',
     'Vote Now': '立即投票',
