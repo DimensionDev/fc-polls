@@ -154,7 +154,7 @@ export function PollCard({ poll, theme, locale, profileId }: PollCardProps) {
                 }}
             >
                 <span>
-                    {profileId ? (
+                    {profileId || is_end ? (
                         <span>
                             {t`${vote_count} vote${vote_count !== 1 ? 's' : ''}`} · {getPollTimeLeft(poll, locale)}
                         </span>
