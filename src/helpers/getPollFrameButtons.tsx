@@ -45,12 +45,12 @@ export const getPollFrameButtons = ({ poll, queryData }: Parameters) => {
         </Button>
     );
 
-    if (poll.is_end) {
-        return [getFireflyLinkButton()];
-    }
-
     if (!queryData.profileId) {
         return [getCheckButton(t`Vote Now`), getFireflyLinkButton()];
+    }
+
+    if (poll.is_end) {
+        return [getFireflyLinkButton()];
     }
 
     if (votedList.length >= maxVoteCount) {
