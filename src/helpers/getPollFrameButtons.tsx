@@ -6,7 +6,6 @@ import { POLL_CHOICE_TYPE } from '@/constants/enum';
 import { ImageQuery } from '@/constants/zod';
 import { createFrameTranslator } from '@/helpers/createFrameTranslator';
 import { getPollFramePostUrl } from '@/helpers/getPollFramePostUrl';
-import { indexToLetter } from '@/helpers/indexToLetter';
 import { Poll } from '@/types/api';
 
 interface Parameters {
@@ -59,7 +58,7 @@ export const getPollFrameButtons = ({ poll, queryData }: Parameters) => {
 
     return poll.choice_detail.map((choice, index) => (
         <Button key={index} action="post" target={postTarget}>
-            {`${indexToLetter(index)}. ${choice.name}`}
+            {choice.name}
         </Button>
     ));
 };

@@ -9,10 +9,11 @@ export const DARK_THEME: PollTheme = {
     titleColor: '#f5f5f5',
     optionBgColor: '#ffffff21',
     optionTextColor: '#f5f5f5',
-    optionSelectedTextColor: '#181818',
-    optionSelectedBgColor: '#8e96ff',
-    cardBgColor: '#030303',
+    optionSelectedTextColor: '#8e96ff',
+    optionSelectedBgColor: '#ffffff21',
+    cardBgColor: '#181818',
     secondTextColor: '#ffffff',
+    percentColor: '#FFFFFF70',
 };
 
 export const LIGHT_THEME: PollTheme = {
@@ -23,6 +24,7 @@ export const LIGHT_THEME: PollTheme = {
     optionSelectedBgColor: '#8e96ff',
     cardBgColor: '#ffffff',
     secondTextColor: '#767676',
+    percentColor: '#181818',
 };
 
 export const THEME_CONFIG = {
