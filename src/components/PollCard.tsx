@@ -91,7 +91,7 @@ function VoteResult({ choice, theme, isMax }: VoteResultProps) {
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
                             alt={choice.name}
-                            src={`${env.external.NEXT_PUBLIC_HOST}/tick-circle.png`}
+                            src={`${env.external.NEXT_PUBLIC_HOST}/checked.png`}
                             style={{
                                 display: 'flex',
                                 width: 20 * IMAGE_ZOOM_SCALE,
