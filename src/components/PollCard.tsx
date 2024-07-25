@@ -4,7 +4,6 @@ import { env } from '@/constants/env';
 import { IMAGE_THEME, THEME_CONFIG } from '@/constants/theme';
 import { createFrameTranslator } from '@/helpers/createFrameTranslator';
 import { getPollTimeLeft } from '@/helpers/getPollTimeLeft';
-import { indexToLetter } from '@/helpers/indexToLetter';
 import { PollTheme } from '@/types';
 import { ChoiceDetail, Poll } from '@/types/api';
 
@@ -23,6 +22,7 @@ interface VoteButtonProps {
 interface VoteResultProps {
     choice: ChoiceDetail;
     theme: PollTheme;
+    isMax: boolean;
 }
 
 function VoteButton({ text, theme }: VoteButtonProps) {
@@ -36,9 +36,9 @@ function VoteButton({ text, theme }: VoteButtonProps) {
                 height: 40 * IMAGE_ZOOM_SCALE,
                 width: '100%',
                 borderRadius: 10 * IMAGE_ZOOM_SCALE,
-                border: `${1 * IMAGE_ZOOM_SCALE}px solid ${theme.optionTextColor}`,
                 fontSize: 16 * IMAGE_ZOOM_SCALE,
                 fontWeight: 'bold',
+                backgroundColor: theme.optionBgColor,
             }}
         >
             {text}
@@ -46,7 +46,7 @@ function VoteButton({ text, theme }: VoteButtonProps) {
     );
 }
 
-function VoteResult({ choice, theme }: VoteResultProps) {
+function VoteResult({ choice, theme, isMax }: VoteResultProps) {
     return (
         <div
             style={{
@@ -100,16 +100,20 @@ function VoteResult({ choice, theme }: VoteResultProps) {
                         />
                     ) : null}
                 </span>
-                <span style={{ display: 'flex', color: theme.optionTextColor }}>{choice.percent}%</span>
+                <span style={{ display: 'flex', color: isMax ? theme.optionTextColor : theme.percentColor }}>
+                    {choice.percent}%
+                </span>
             </div>
         </div>
     );
 }
 
-export function PollCard({ poll, theme, locale, profileId }: PollCardProps) {
+export function PollCard({ poll, locale, profileId }: PollCardProps) {
     const { is_end, choice_detail, vote_count } = poll;
-    const themeConfig = THEME_CONFIG[theme];
+    const themeConfig = THEME_CONFIG[IMAGE_THEME.Dark];
     const t = createFrameTranslator(locale);
+
+    const maxPercent = Math.max(...choice_detail.map((choice) => choice.percent || 0));
 
     return (
         <div
@@ -136,9 +140,14 @@ export function PollCard({ poll, theme, locale, profileId }: PollCardProps) {
             >
                 {choice_detail.map((choice, index) =>
                     (!!profileId && is_end) || choice_detail.some((choice) => choice.is_select) ? (
-                        <VoteResult key={index} choice={choice} theme={themeConfig} />
+                        <VoteResult
+                            key={index}
+                            choice={choice}
+                            theme={themeConfig}
+                            isMax={!!choice.percent && choice.percent === maxPercent}
+                        />
                     ) : (
-                        <VoteButton key={index} theme={themeConfig} text={`${indexToLetter(index)}. ${choice.name}`} />
+                        <VoteButton key={index} theme={themeConfig} text={choice.name} />
                     ),
                 )}
             </div>

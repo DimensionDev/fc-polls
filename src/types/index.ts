@@ -37,6 +37,7 @@ export type PollTheme = {
     optionSelectedBgColor: string;
     cardBgColor: string;
     secondTextColor: string;
+    percentColor: string;
 };
 
 export interface FrameButton {
