@@ -14,17 +14,17 @@ export const getPollTimeLeft = (poll: Poll, locale: LOCALE) => {
 
     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
     if (days >= 1) {
-        return t`${days} day${days > 1 ? 's' : ''} left`;
+        return t`${days} day${days > 1 ? 'S' : ''} left`;
     }
 
     const hours = Math.floor(timeLeft / (1000 * 60 * 60));
     if (hours >= 1) {
-        return t`${hours} hour${hours > 1 ? 's' : ''} left`;
+        return t`${hours} hour${hours > 1 ? 'S' : ''} left`;
     }
 
     const minutes = Math.floor(timeLeft / (1000 * 60));
     if (minutes >= 1) {
-        return t`${minutes} minute${minutes > 1 ? 's' : ''} left`;
+        return t`${minutes} minute${minutes > 1 ? 'S' : ''} left`;
     }
 
     return t`Less than a minute left`;

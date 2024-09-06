@@ -16,6 +16,7 @@ export interface ChoiceDetail {
 
 export interface Poll {
     poll_id: string;
+    title: string;
     created_time: number;
     end_time: number;
     is_end: boolean;

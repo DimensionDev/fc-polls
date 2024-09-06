@@ -11,12 +11,13 @@ export const parsePollWithZod = (poll: Poll | null, locale: LOCALE, currentVoteI
         .object(
             {
                 poll_id: z.string(),
+                title: z.string(),
                 created_time: z.number().int().positive(),
                 end_time: z.number().int().positive(),
                 is_end: z.boolean(),
                 vote_count: z.number().int().min(0),
                 type: z.nativeEnum(POLL_CHOICE_TYPE),
-                multiple_count: z.number().int().min(0).optional().default(PER_USER_VOTE_LIMIT),
+                multiple_count: z.number().int().min(0).default(PER_USER_VOTE_LIMIT).catch(PER_USER_VOTE_LIMIT),
                 choice_detail: z.array(
                     z.object({
                         id: z.number().int().positive(),

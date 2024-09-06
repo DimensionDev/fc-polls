@@ -7,10 +7,10 @@ export enum IMAGE_THEME {
 
 export const DARK_THEME: PollTheme = {
     titleColor: '#f5f5f5',
-    optionBgColor: '#ffffff21',
+    optionBgColor: 'rgba(172, 157, 246, 0.2)',
     optionTextColor: '#f5f5f5',
     optionSelectedTextColor: '#AC9DF6',
-    optionSelectedBgColor: '#ffffff21',
+    optionSelectedBgColor: '#AC9DF6',
     cardBgColor: '#181818',
     secondTextColor: '#ffffff',
     percentColor: '#FFFFFF70',
