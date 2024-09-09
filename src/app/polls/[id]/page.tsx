@@ -6,6 +6,7 @@ import { RedirectProfile } from '@/components/RedirectProfile';
 import { COMMON_APP_TITLE } from '@/constants';
 import { env } from '@/constants/env';
 import { IMAGE_QUERY_SCHEMA } from '@/constants/zod';
+import { getPoll } from '@/services/getPoll';
 
 interface PageProps {
     params: { id: string };
@@ -17,8 +18,9 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
         ...searchParams,
         id: params.id,
     });
-    const ogImage = `${env.external.NEXT_PUBLIC_HOST}/firefly.png`;
     const metadata = await fetchMetadata(new URL(urlcat('/api/frames', queryData), env.external.NEXT_PUBLIC_HOST));
+    const poll = await getPoll(queryData.id, queryData.source, queryData.profileId);
+    const ogImage = (metadata?.['of:image'] || `${env.external.NEXT_PUBLIC_HOST}/firefly.png`) as string;
 
     if (metadata) {
         // update this to support hey.xyz
@@ -33,7 +35,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
         other: { ...metadata },
         openGraph: {
             title: COMMON_APP_TITLE,
-            description: 'Everything app for Web3 natives',
+            description: poll?.title || 'Everything app for Web3 natives',
             images: [ogImage],
         },
         metadataBase: new URL(env.external.NEXT_PUBLIC_HOST),
