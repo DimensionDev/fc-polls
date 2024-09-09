@@ -185,15 +185,17 @@ export function PollCard({ poll, locale, profileId }: PollCardProps) {
                         textAlign: 'center',
                     }}
                 >
-                    <div style={{
-                        display: '-webkit-box',
-                        WebkitLineClamp: profileId ? 2 : 5,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        wordBreak: 'break-word',
-                        maxWidth: '100%',
-                    }}>
+                    <div
+                        style={{
+                            display: '-webkit-box',
+                            WebkitLineClamp: profileId ? 2 : 5,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            wordBreak: 'break-word',
+                            maxWidth: '100%',
+                        }}
+                    >
                         {poll.title}
                     </div>
                 </div>
