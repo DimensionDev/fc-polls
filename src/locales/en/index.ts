@@ -29,7 +29,7 @@ const locales = {
     '_ vote_': '{0} VOTE{1}',
     'Via Firefly': 'Via Firefly',
     'Final results': 'POLL HAS ENDED',
-    'Vote Now': 'Vote Now',
+    Vote: 'Vote',
     'Go to Firefly': 'Go to Firefly',
     'Not supported frame client protocol': 'Not supported frame client protocol',
     Refresh: 'Refresh',
