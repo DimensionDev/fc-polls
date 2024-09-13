@@ -29,7 +29,7 @@ const locales = {
     '_ vote_': '{0} 次投票',
     'Via Firefly': '来自Firefly',
     'Final results': '投票已结束',
-    'Vote Now': '立即投票',
+    Vote: '投票',
     'Go to Firefly': '前往Firefly',
     'Not supported frame client protocol': '不支持的frame客户端协议',
     Refresh: '刷新',
