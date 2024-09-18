@@ -32,16 +32,16 @@ function VoteButton({ text, theme }: VoteButtonProps) {
                 display: 'flex',
                 alignItems: 'center',
                 color: theme.secondTextColor,
-                height: 20 * IMAGE_ZOOM_SCALE,
+                height: 40 * IMAGE_ZOOM_SCALE,
                 width: '100%',
-                fontSize: 18 * IMAGE_ZOOM_SCALE,
+                fontSize: 24 * IMAGE_ZOOM_SCALE,
             }}
         >
             <span
                 style={{
-                    marginRight: 9 * IMAGE_ZOOM_SCALE,
-                    width: 12 * IMAGE_ZOOM_SCALE,
-                    height: 12 * IMAGE_ZOOM_SCALE,
+                    marginRight: 12 * IMAGE_ZOOM_SCALE,
+                    width: 16 * IMAGE_ZOOM_SCALE,
+                    height: 16 * IMAGE_ZOOM_SCALE,
                     borderRadius: '50%',
                     backgroundColor: theme.secondTextColor,
                 }}
@@ -67,10 +67,11 @@ function VoteResult({ choice, theme, isMax }: VoteResultProps) {
             style={{
                 position: 'relative',
                 display: 'flex',
-                height: 20 * IMAGE_ZOOM_SCALE,
+                height: 40 * IMAGE_ZOOM_SCALE,
                 backgroundColor: theme.optionBgColor,
-                borderRadius: 4 * IMAGE_ZOOM_SCALE,
-                fontSize: 12 * IMAGE_ZOOM_SCALE,
+                borderRadius: 8 * IMAGE_ZOOM_SCALE,
+                fontSize: 20 * IMAGE_ZOOM_SCALE,
+                fontWeight: isMax ? 'bold' : 'normal',
                 color: theme.secondTextColor,
                 overflow: 'hidden',
             }}
@@ -98,8 +99,8 @@ function VoteResult({ choice, theme, isMax }: VoteResultProps) {
                     zIndex: 1,
                     width: '100%',
                     height: '100%',
-                    paddingLeft: 4 * IMAGE_ZOOM_SCALE,
-                    paddingRight: 8 * IMAGE_ZOOM_SCALE,
+                    paddingLeft: 8 * IMAGE_ZOOM_SCALE,
+                    paddingRight: 16 * IMAGE_ZOOM_SCALE,
                 }}
             >
                 <div
@@ -116,8 +117,8 @@ function VoteResult({ choice, theme, isMax }: VoteResultProps) {
                         <img
                             alt="selected"
                             style={{
-                                width: 16 * IMAGE_ZOOM_SCALE,
-                                height: 16 * IMAGE_ZOOM_SCALE,
+                                width: 24 * IMAGE_ZOOM_SCALE,
+                                height: 24 * IMAGE_ZOOM_SCALE,
                             }}
                             src={`${env.external.NEXT_PUBLIC_HOST}/selected.png`}
                         />
@@ -163,10 +164,10 @@ export function PollCard({ poll, locale, profileId }: PollCardProps) {
                 <div
                     style={{
                         display: 'flex',
-                        marginTop: 120 * IMAGE_ZOOM_SCALE,
+                        marginTop: 170 * IMAGE_ZOOM_SCALE,
                         justifyContent: 'center',
                         width: '100%',
-                        fontSize: 12 * IMAGE_ZOOM_SCALE,
+                        fontSize: 24 * IMAGE_ZOOM_SCALE,
                         color: is_end ? themeConfig.secondTextColor : themeConfig.optionSelectedTextColor,
                         opacity: is_end ? 0.5 : 1,
                     }}
@@ -181,14 +182,15 @@ export function PollCard({ poll, locale, profileId }: PollCardProps) {
                         padding: `0 ${72 * IMAGE_ZOOM_SCALE}px`,
                         width: '100%',
                         color: themeConfig.secondTextColor,
-                        fontSize: 16 * IMAGE_ZOOM_SCALE,
+                        fontSize: 28 * IMAGE_ZOOM_SCALE,
+                        fontWeight: 'bold',
                         textAlign: 'center',
                     }}
                 >
                     <div
                         style={{
                             display: '-webkit-box',
-                            WebkitLineClamp: profileId ? 2 : 5,
+                            WebkitLineClamp: profileId ? 3 : 7,
                             WebkitBoxOrient: 'vertical',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
@@ -250,7 +252,7 @@ export function PollCard({ poll, locale, profileId }: PollCardProps) {
                     display: 'flex',
                     justifyContent: 'center',
                     paddingBottom: 16 * IMAGE_ZOOM_SCALE,
-                    fontSize: 10 * IMAGE_ZOOM_SCALE,
+                    fontSize: 16 * IMAGE_ZOOM_SCALE,
                     color: themeConfig.secondTextColor,
                 }}
             >
