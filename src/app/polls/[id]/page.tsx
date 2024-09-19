@@ -21,6 +21,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
     const metadata = await fetchMetadata(new URL(urlcat('/api/frames', queryData), env.external.NEXT_PUBLIC_HOST));
     const poll = await getPoll(queryData.id, queryData.source, queryData.profileId);
     const ogImage = (metadata?.['of:image'] || `${env.external.NEXT_PUBLIC_HOST}/firefly.png`) as string;
+    const ogTitle = queryData.handle ? `Polls from @${queryData.handle} via Firefly` : COMMON_APP_TITLE;
 
     if (metadata) {
         // update this to support hey.xyz
@@ -31,10 +32,10 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
     }
 
     return {
-        title: COMMON_APP_TITLE,
+        title: ogTitle,
         other: { ...metadata },
         openGraph: {
-            title: COMMON_APP_TITLE,
+            title: ogTitle,
             description: poll?.title || 'Everything app for Web3 natives',
             images: [ogImage],
         },
