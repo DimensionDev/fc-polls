@@ -11,6 +11,7 @@ export const createFrameSuccessResponse = (poll: Poll, queryData: ImageQuery) =>
             headers: {
                 'Cache-Control': 'public, max-age=0',
             },
+            aspectRatio: '1:1' as const,
         },
     };
 };
