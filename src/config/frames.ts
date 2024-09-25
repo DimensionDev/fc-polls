@@ -4,6 +4,7 @@ import { createFrames } from 'frames.js/next';
 
 import { lensFrame } from '@/config/lensFrame';
 import { env } from '@/constants/env';
+import { loadFonts } from '@/helpers/loadFonts';
 import { FrameContext } from '@/types';
 
 const hubRequestHeaders: Record<string, string> = {};
@@ -15,9 +16,7 @@ export const frames = createFrames({
     baseUrl: env.external.NEXT_PUBLIC_HOST,
     basePath: '/api/frames',
     middleware: [
-        imagesWorkerMiddleware({
-            imagesRoute: '/images',
-        }),
+        imagesWorkerMiddleware({}),
         farcasterHubContext({
             hubHttpUrl: env.external.NEXT_PUBLIC_HUB_URL,
             hubRequestOptions: {
@@ -26,6 +25,13 @@ export const frames = createFrames({
         }),
         lensFrame,
     ],
+    imageRenderingOptions: async () => {
+        const fonts = await loadFonts();
+
+        return {
+            imageOptions: { fonts },
+        };
+    },
 });
 
 export type FrameHandler = (ctx: FrameContext) => ReturnType<Parameters<typeof frames>[0]>;

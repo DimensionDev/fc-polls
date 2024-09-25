@@ -1,7 +1,5 @@
+import { getLensFrameMessage, isLensFrameActionPayload } from 'frames.js/lens';
 import { openframes } from 'frames.js/middleware';
-
-import { getLensFrameMessage } from '@/helpers/getLensFrameMessage';
-import { isLensFrameActionPayload } from '@/helpers/isLensFrameActionPayload';
 
 export const lensFrame = openframes({
     clientProtocol: {
@@ -9,8 +7,8 @@ export const lensFrame = openframes({
         version: '1.0.0',
     },
     handler: {
-        isValidPayload: (body: JSON) => isLensFrameActionPayload(body),
-        getFrameMessage: async (body: JSON) => {
+        isValidPayload: (body) => isLensFrameActionPayload(body),
+        getFrameMessage: async (body) => {
             if (!isLensFrameActionPayload(body)) return;
             const result = await getLensFrameMessage(body);
 

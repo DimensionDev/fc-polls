@@ -78,7 +78,7 @@ export interface FrameContext {
         state?: string & JsonValue;
         actionResponse?: string;
         deadline?: number;
-        isValid: boolean;
+        isValid?: boolean;
     };
     clientProtocol?: { id: string; version: string };
     state?: JsonValue;
