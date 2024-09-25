@@ -71,7 +71,8 @@ function VoteResult({ choice, theme, isMax }: VoteResultProps) {
                 backgroundColor: theme.optionBgColor,
                 borderRadius: 12 * IMAGE_ZOOM_SCALE,
                 fontSize: 20 * IMAGE_ZOOM_SCALE,
-                fontWeight: isMax ? 'bold' : 'normal',
+                fontFamily: 'Inter',
+                fontWeight: isMax ? 700 : 400,
                 color: theme.secondTextColor,
                 overflow: 'hidden',
             }}
@@ -107,7 +108,7 @@ function VoteResult({ choice, theme, isMax }: VoteResultProps) {
                     style={{
                         display: 'flex',
                         alignItems: 'center',
-                        width: '86%',
+                        width: choice.is_select ? '80%' : '86%',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
@@ -117,10 +118,10 @@ function VoteResult({ choice, theme, isMax }: VoteResultProps) {
                         <img
                             alt="selected"
                             style={{
-                                width: 24 * IMAGE_ZOOM_SCALE,
-                                height: 24 * IMAGE_ZOOM_SCALE,
+                                marginRight: 4 * IMAGE_ZOOM_SCALE,
+                                width: 16 * IMAGE_ZOOM_SCALE,
                             }}
-                            src={`${env.external.NEXT_PUBLIC_HOST}/selected.png`}
+                            src={`${env.external.NEXT_PUBLIC_HOST}/checked.png`}
                         />
                     ) : null}
                     {choice.name}
@@ -164,7 +165,7 @@ export function PollCard({ poll, locale, profileId }: PollCardProps) {
                 <div
                     style={{
                         display: 'flex',
-                        marginTop: 138 * IMAGE_ZOOM_SCALE,
+                        marginTop: 150 * IMAGE_ZOOM_SCALE,
                         justifyContent: 'center',
                         width: '100%',
                         fontSize: 24 * IMAGE_ZOOM_SCALE,
@@ -183,7 +184,6 @@ export function PollCard({ poll, locale, profileId }: PollCardProps) {
                         width: '100%',
                         color: themeConfig.secondTextColor,
                         fontSize: 28 * IMAGE_ZOOM_SCALE,
-                        fontWeight: 'bold',
                         textAlign: 'center',
                     }}
                 >
@@ -196,6 +196,8 @@ export function PollCard({ poll, locale, profileId }: PollCardProps) {
                             textOverflow: 'ellipsis',
                             wordBreak: 'break-word',
                             maxWidth: '100%',
+                            fontFamily: 'Inter',
+                            fontWeight: 700,
                         }}
                     >
                         {poll.title}
@@ -230,7 +232,7 @@ export function PollCard({ poll, locale, profileId }: PollCardProps) {
                         flexDirection: 'column',
                         width: '100%',
                         gap: 8 * IMAGE_ZOOM_SCALE,
-                        padding: `0 ${83 * IMAGE_ZOOM_SCALE}px`,
+                        padding: `0 ${(showResult ? 83 : 50) * IMAGE_ZOOM_SCALE}px`,
                     }}
                 >
                     {choice_detail.map((choice, index) => {
