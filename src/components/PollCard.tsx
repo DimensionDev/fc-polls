@@ -34,7 +34,7 @@ function VoteButton({ text, theme }: VoteButtonProps) {
                 color: theme.secondTextColor,
                 height: 40 * IMAGE_ZOOM_SCALE,
                 width: '100%',
-                fontSize: 24 * IMAGE_ZOOM_SCALE,
+                fontSize: 20 * IMAGE_ZOOM_SCALE,
             }}
         >
             <span
@@ -165,7 +165,7 @@ export function PollCard({ poll, locale, profileId }: PollCardProps) {
                 <div
                     style={{
                         display: 'flex',
-                        marginTop: 150 * IMAGE_ZOOM_SCALE,
+                        marginTop: 156 * IMAGE_ZOOM_SCALE,
                         justifyContent: 'center',
                         width: '100%',
                         fontSize: 24 * IMAGE_ZOOM_SCALE,
@@ -232,7 +232,7 @@ export function PollCard({ poll, locale, profileId }: PollCardProps) {
                         flexDirection: 'column',
                         width: '100%',
                         gap: 8 * IMAGE_ZOOM_SCALE,
-                        padding: `0 ${(showResult ? 83 : 50) * IMAGE_ZOOM_SCALE}px`,
+                        padding: `0 ${(showResult ? 83 : 20) * IMAGE_ZOOM_SCALE}px`,
                     }}
                 >
                     {choice_detail.map((choice, index) => {
