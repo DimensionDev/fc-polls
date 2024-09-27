@@ -3,6 +3,7 @@ import { imagesWorkerMiddleware } from 'frames.js/middleware/images-worker';
 import { createFrames } from 'frames.js/next';
 
 import { lensFrame } from '@/config/lensFrame';
+import { IMAGE_ZOOM_SCALE } from '@/constants';
 import { env } from '@/constants/env';
 import { loadFonts } from '@/helpers/loadFonts';
 import { FrameContext } from '@/types';
@@ -29,7 +30,13 @@ export const frames = createFrames({
         const fonts = await loadFonts();
 
         return {
-            imageOptions: { fonts },
+            imageOptions: {
+                fonts,
+                sizes: {
+                    '1.91:1': { width: 1085 * IMAGE_ZOOM_SCALE, height: 568 * IMAGE_ZOOM_SCALE },
+                    '1:1': { width: 600 * IMAGE_ZOOM_SCALE, height: 600 * IMAGE_ZOOM_SCALE },
+                },
+            },
         };
     },
 });
