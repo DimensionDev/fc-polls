@@ -18,13 +18,6 @@ export const parseFrameCtxZod = (ctx: unknown, locale: LOCALE) => {
             }),
         })
         .transform((v, ctx) => {
-            if (!v.isValid) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.custom,
-                    message: t`Invalid signature message`,
-                });
-                return z.NEVER;
-            }
             if (!v.profileId && !v.requesterFid) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
