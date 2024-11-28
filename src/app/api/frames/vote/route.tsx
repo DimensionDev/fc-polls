@@ -34,6 +34,10 @@ export const POST = frames(
         const maxVoteCount = poll.type === POLL_CHOICE_TYPE.Multiple ? poll.multiple_count : PER_USER_VOTE_LIMIT;
 
         if (!currentChoice.is_select && votedLen < maxVoteCount) {
+            if (body.untrustedData.idToken) {
+                body.untrustedData.identityToken = body.untrustedData.idToken;
+                delete body.untrustedData.idToken;
+            }
             const voteResult = await vote(
                 {
                     poll_id: pollId,
