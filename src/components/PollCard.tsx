@@ -194,7 +194,7 @@ export function PollCard({ poll, locale, profileId }: PollCardProps) {
                             WebkitBoxOrient: 'vertical',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
-                            wordBreak: 'break-word',
+                            wordBreak: 'break-all',
                             maxWidth: '100%',
                             fontFamily: 'Inter',
                             fontWeight: 700,
