@@ -75,7 +75,6 @@ export function farcasterHubContext(options: HubHttpUrlOptions): FramesMiddlewar
                     hubRequestOptions: options.hubRequestOptions,
                 },
             });
-            console.log('farcasterHubContext middleware: requesterEthAddresses', requesterEthAddresses);
             const requesterCustodyAddress = requesterEthAddresses.find((item) => item.type === 'custody')?.address;
             if (!requesterCustodyAddress) {
                 throw new Error('Custody address not found');
@@ -103,11 +102,7 @@ export function farcasterHubContext(options: HubHttpUrlOptions): FramesMiddlewar
                 },
             });
         } catch (error) {
-            console.log('farcasterHubContext middleware: error while decoding farcaster message', error);
-            // eslint-disable-next-line no-console -- provide feedback to the developer
-            console.info(
-                'farcasterHubContext middleware: could not decode farcaster message from payload, calling next.',
-            );
+            console.warn('farcasterHubContext middleware: error while decoding farcaster message', error);
             return next();
         }
     };
