@@ -7,13 +7,14 @@ import { COMMON_APP_TITLE } from '@/constants';
 import { env } from '@/constants/env';
 import { IMAGE_QUERY_SCHEMA } from '@/constants/zod';
 import { getPoll } from '@/services/getPoll';
+import { NextPageProps } from '@/types/utility';
 
-interface PageProps {
-    params: { id: string };
-    searchParams: { [key: string]: string };
-}
+interface PageProps extends NextPageProps<{ id: string }, { [key: string]: string }> {}
 
-export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+    const params = await props.params;
+    const searchParams = await props.searchParams;
+
     const queryData = IMAGE_QUERY_SCHEMA.parse({
         ...searchParams,
         id: params.id,
@@ -43,6 +44,8 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
     };
 }
 
-export default async function Page({ searchParams }: PageProps) {
+export default async function Page(props: PageProps) {
+    const searchParams = await props.searchParams;
+
     return <RedirectProfile profileUrl={searchParams.author} />;
 }
