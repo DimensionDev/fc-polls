@@ -1,7 +1,7 @@
-import { farcasterHubContext } from 'frames.js/middleware';
 import { imagesWorkerMiddleware } from 'frames.js/middleware/images-worker';
 import { createFrames } from 'frames.js/next';
 
+import { farcasterHubContext } from '@/config/farcasterFrame';
 import { lensFrame } from '@/config/lensFrame';
 import { IMAGE_ZOOM_SCALE } from '@/constants';
 import { env } from '@/constants/env';
